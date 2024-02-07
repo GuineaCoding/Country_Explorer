@@ -10,6 +10,7 @@ export const landmarkMemStore = {
   async addLandmark(Landmark) {
     Landmark._id = v4();
     landmarks.push(Landmark);
+    console.log(Landmark)
     return Landmark;
   },
 

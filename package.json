@@ -20,10 +20,12 @@
     "prettier": "^3.2.2"
   },
   "dependencies": {
+    "@firebase/database": "^1.0.3",
     "@hapi/cookie": "^12.0.1",
     "@hapi/hapi": "^21.3.2",
     "@hapi/vision": "^7.0.3",
     "dotenv": "^16.3.2",
+    "firebase": "^10.8.0",
     "handlebars": "^4.7.8",
     "joi": "^17.12.0",
     "lowdb": "^7.0.1",

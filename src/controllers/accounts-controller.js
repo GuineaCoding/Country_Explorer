@@ -1,3 +1,4 @@
+import { getDatabase, ref, set, push } from "firebase/database";
 import { db } from "../models/db.js";
 
 export const accountsController = {
@@ -13,11 +14,27 @@ export const accountsController = {
   },
   signup: {
     handler: async function (request, h) {
-      const user = request.payload;
-      await db.userStore.addUser(user);
-      return h.redirect("/");
+      try {
+        const user = request.payload;
+        console.log("User Payload:", user); 
+  
+      
+        const plainUserObject = { ...user };
+        console.log("User object to be saved:", plainUserObject);
+  
+        const firebaseDB = getDatabase();
+        const usersRef = ref(firebaseDB, `users/${user.email.replace(".", ",")}`);
+        await set(usersRef, plainUserObject);
+        console.log("User registered in Firebase"); 
+  
+        return h.redirect("/");
+      } catch (error) {
+        console.error("Error in signup:", error);
+        return h.response("An internal server error occurred").code(500);
+      }
     },
   },
+  
   showLogin: {
     handler: function (request, h) {
       return h.view("login-view", { title: "Login to Country Explorer" });
