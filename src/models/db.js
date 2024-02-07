@@ -1,12 +1,12 @@
 import { userMemStore } from "./mem/user-mem-store.js";
-import { playlistMemStore } from "./mem/playlist-mem-store.js";
+import { landmarkMemStore } from "./mem/landmark-mem-store.js";
 
 export const db = {
   userStore: null,
-  playlistStore: null,
+  landmarkStore: null, 
 
   init() {
     this.userStore = userMemStore;
-    this.playlistStore = playlistMemStore;
+    this.landmarkStore = landmarkMemStore; 
   },
 };
