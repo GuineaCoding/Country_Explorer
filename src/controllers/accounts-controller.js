@@ -1,5 +1,6 @@
 import { UserSpec, UserCredentialsSpec } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
+import { getDatabase, ref, get, set } from "firebase/database";
 
 export const accountsController = {
   index: {
@@ -24,9 +25,23 @@ export const accountsController = {
       },
     },
     handler: async function (request, h) {
-      const user = request.payload;
-      await db.userStore.addUser(user);
-      return h.redirect("/");
+      try {
+        const user = request.payload;
+
+        // Initialize Firebase Database
+        const firebaseDB = getDatabase();
+        const usersRef = ref(firebaseDB, `users/${user.email.replace(/\./g, ",")}`);
+
+        // Save user to Firebase
+        const plainUserObject = { ...user };
+        await set(usersRef, plainUserObject);
+
+        // Redirect after successful signup
+        return h.redirect("/login"); // Redirect to login after signup
+      } catch (error) {
+        console.error("Error in signup:", error);
+        return h.response("An internal server error occurred").code(500);
+      }
     },
   },
   showLogin: {
