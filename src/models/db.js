@@ -1,12 +1,15 @@
-import { userMemStore } from "./mem/user-mem-store.js";
-import { landmarkMemStore } from "./mem/landmark-mem-store.js";
+import { userJsonStore } from "./json/user-json-store.js";
+import { landmarkCategoriesJsonStore } from "./json/landmark-category-json-store.js";
+import { trackJsonStore } from "./json/track-json-store.js";
 
 export const db = {
   userStore: null,
-  landmarkStore: null, 
+  landmarkCategoryStore: landmarkCategoriesJsonStore,
+  trackStore: null,
 
   init() {
-    this.userStore = userMemStore;
-    this.landmarkStore = landmarkMemStore; 
+    this.userStore = userJsonStore;
+    this.landmarkCategoryStore = landmarkCategoriesJsonStore; 
+    this.trackStore = trackJsonStore;
   },
 };

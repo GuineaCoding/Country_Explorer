@@ -1,7 +1,7 @@
 {
   "name": "playtime",
   "version": "0.1.0",
-  "description": "Playtime: a Hapi/node application for managing Playlists",
+  "description": "Playtime: a Hapi/node application for managing interactions with landmarks",
   "main": "src/server.js",
   "type": "module",
   "scripts": {

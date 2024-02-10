@@ -9,7 +9,6 @@ import Handlebars from "handlebars";
 import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
 import { accountsController } from "./controllers/accounts-controller.js";
-import "../firebaseInit.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,18 +42,19 @@ async function init() {
 
   server.auth.strategy("session", "cookie", {
     cookie: {
-      name: process.env.COOKIE_NAME,
-      password: process.env.COOKIE_PASSWORD,
-      isSecure: false, 
+      name: process.env.cookie_name,
+      password: process.env.cookie_password,
+      isSecure: false,
     },
-    redirectTo: "/login",
+    redirectTo: "/",
+    validate: accountsController.validate,
   });
   server.auth.default("session");
 
   db.init();
   server.route(webRoutes);
   await server.start();
-  console.log(`Server running on ${server.info.uri}`);
+  console.log("Server running on %s", server.info.uri);
 }
 
 process.on("unhandledRejection", (err) => {

@@ -1,23 +1,23 @@
-import { PlaylistSpec } from "../models/joi-schemas.js";
+import { LandmarkCategorySpec } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
 
 export const dashboardController = {
   index: {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
-      const playlists = await db.playlistStore.getUserPlaylists(loggedInUser._id);
+      const landmarkCategories = await db.landmarkCategoryStore.getUserLandmarkCategories(loggedInUser._id);
       const viewData = {
         title: "Playtime Dashboard",
         user: loggedInUser,
-        playlists: playlists,
+        landmarkCategories: landmarkCategories,
       };
       return h.view("dashboard-view", viewData);
     },
   },
 
-  addPlaylist: {
+  addLandMarkCategory: {
     validate: {
-      payload: PlaylistSpec,
+      payload: LandmarkCategorySpec,
       options: { abortEarly: false },
       failAction: function (request, h, error) {
         return h.view("dashboard-view", { title: "Add Landmark error", errors: error.details }).takeover().code(400);
@@ -25,19 +25,19 @@ export const dashboardController = {
     },
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
-      const newPlayList = {
+      const newLandmarkCategory = {
         userid: loggedInUser._id,
         title: request.payload.title,
       };
-      await db.playlistStore.addPlaylist(newPlayList);
+      await db.landmarkCategoryStore.addLandMarkCategory(newLandmarkCategory);
       return h.redirect("/dashboard");
     },
   },
 
-  deletePlaylist: {
+  deleteLandmarkCategory: {
     handler: async function (request, h) {
-      const playlist = await db.playlistStore.getPlaylistById(request.params.id);
-      await db.playlistStore.deletePlaylistById(playlist._id);
+      const landmarkCategory = await db.landmarkCategoryStore.getLandmarkCategoryById(request.params.id);
+      await db.landmarkCategoryStore.deleteLandmarkCategoryById(landmarkCategory._id);
       return h.redirect("/dashboard");
     },
   },
