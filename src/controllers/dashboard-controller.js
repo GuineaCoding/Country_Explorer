@@ -120,12 +120,8 @@ export const dashboardController = {
   deleteLandmarkCategory: {
     handler: async function (request, h) {
       console.log("deleteLandmarkCategory handler accessed");
-  
       const { email } = request.auth.credentials;
-      console.log(`User email: ${email}`);
       const sanitizedEmail = email.replace(/\./g, ",");
-      console.log(`Sanitized email: ${sanitizedEmail}`);
-      
       // Retrieve the categoryId from the URL parameter
       const categoryId = request.params.id;
       console.log(`Category ID received: ${categoryId}`);
@@ -137,8 +133,8 @@ export const dashboardController = {
   
       try {
         const firebaseDB = getDatabase();
-        const categoryRef = ref(firebaseDB, `landmarkCategories/${sanitizedEmail}/${categoryId}`);
-        console.log(`Firebase reference path: landmarkCategories/${sanitizedEmail}/${categoryId}`);
+        const categoryRef = ref(firebaseDB, `users/${sanitizedEmail}/landmarkCategories/${categoryId}`);
+        console.log(`Firebase reference path: users/${sanitizedEmail}/landmarkCategories/${categoryId}`);
   
         // Delete the landmark category from Firebase
         await remove(categoryRef);
@@ -147,8 +143,8 @@ export const dashboardController = {
         console.error("Error deleting landmark category from Firebase:", error);
         return h.response("An internal server error occurred").code(500);
       }
+      console.log('test')
       return h.redirect("/dashboard");
     },
-  }
-  ,
+  },
 };
