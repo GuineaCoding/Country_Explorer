@@ -1,16 +1,72 @@
+import { getDatabase, ref, get, push } from "firebase/database";
 import { LandmarkCategorySpec } from "../models/joi-schemas.js";
-import { db } from "../models/db.js";
 
 export const dashboardController = {
   index: {
     handler: async function (request, h) {
-      const loggedInUser = request.auth.credentials;
-      const landmarkCategories = await db.landmarkCategoryStore.getUserLandmarkCategories(loggedInUser._id);
+      console.log("Dashboard controller accessed");
+
+  
+      const credentials = request.auth.credentials;
+      if (!credentials || !credentials.email) {
+        console.log("Email not found in session credentials, redirecting to login");
+        return h.redirect("/login");
+      }
+      console.log(`Retrieved email from session credentials: ${credentials.email}`);
+
+      const sanitizedEmail = credentials.email.replace(/\./g, ",");
+
+      const firebaseDB = getDatabase();
+      let user;
+      let  landmarkCategories;
+
+
+      try {
+        console.log("Retrieving user data from Firebase...");
+        const userRef = ref(firebaseDB, `users/${sanitizedEmail}`);
+        const userSnap = await get(userRef);
+        
+        if (userSnap.exists()) {
+          user = userSnap.val();
+          console.log("User data retrieved from Firebase:", user);
+        
+      
+          landmarkCategories = user.landmarkCategories ? Object.values(user.landmarkCategories) : [];
+          console.log("Landmark categories retrieved from user object:", landmarkCategories);
+        } else {
+          console.log("User not found in Firebase, redirecting to login");
+          return h.redirect("/login");
+        }
+      } catch (error) {
+        console.error("Error retrieving user from Firebase:", error);
+        return h.response("An internal server error occurred").code(500);
+      }
+
+    
+      try {
+        console.log("Retrieving landmark categories from Firebase...");
+        const landmarkCategoriesRef = ref(firebaseDB, `landmarkCategories/${user._id}`);
+        const landmarkCategoriesSnap = await get(landmarkCategoriesRef);
+        
+        if (landmarkCategoriesSnap.exists()) {
+          landmarkCategories = Object.values(landmarkCategoriesSnap.val());
+          console.log('test',landmarkCategories)
+          console.log("Landmark categories retrieved from Firebase:", landmarkCategories);
+        } else {
+          console.log("No landmark categories found for the user in Firebase");
+        }
+      } catch (error) {
+        console.error("Error retrieving landmark categories from Firebase:", error);
+  
+      }
+
       const viewData = {
         title: "Playtime Dashboard",
-        user: loggedInUser,
+        user: user,
         landmarkCategories: landmarkCategories,
       };
+      console.log("Rendering dashboard with view data:", viewData);
+
       return h.view("dashboard-view", viewData);
     },
   },
@@ -20,24 +76,60 @@ export const dashboardController = {
       payload: LandmarkCategorySpec,
       options: { abortEarly: false },
       failAction: function (request, h, error) {
+        console.error("Validation failed:", error);
         return h.view("dashboard-view", { title: "Add Landmark error", errors: error.details }).takeover().code(400);
       },
     },
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
+      console.log("Logged in user details for adding category:", loggedInUser);
+
+      if (!loggedInUser || !loggedInUser.email) {
+        console.error("Logged in user email is undefined for adding category.");
+        return h.response("Internal Server Error. User email is undefined.").code(500);
+      }
+
+      const sanitizedEmail = loggedInUser.email.replace(/\./g, ",");
       const newLandmarkCategory = {
-        userid: loggedInUser._id,
+        
         title: request.payload.title,
       };
-      await db.landmarkCategoryStore.addLandMarkCategory(newLandmarkCategory);
-      return h.redirect("/dashboard");
+
+      try {
+        const firebaseDB = getDatabase();
+      
+        const userCategoriesRef = ref(firebaseDB, `users/${sanitizedEmail}/landmarkCategories`);
+
+        await push(userCategoriesRef, newLandmarkCategory);
+        console.log("New landmark category added under user in Firebase:", newLandmarkCategory);
+
+        return h.redirect("/dashboard");
+      } catch (error) {
+        console.error("Error adding new landmark category under user in Firebase:", error);
+        return h.response("An internal server error occurred").code(500);
+      }
     },
   },
 
   deleteLandmarkCategory: {
     handler: async function (request, h) {
-      const landmarkCategory = await db.landmarkCategoryStore.getLandmarkCategoryById(request.params.id);
-      await db.landmarkCategoryStore.deleteLandmarkCategoryById(landmarkCategory._id);
+      const { email } = request.auth.credentials;
+      const sanitizedEmail = email.replace(/\./g, ",");
+      
+      // Retrieve the categoryId from the URL parameter
+      const categoryId = request.params.id;
+  
+      try {
+        const firebaseDB = getDatabase();
+        const categoryRef = ref(firebaseDB, `landmarkCategories/${sanitizedEmail}/${categoryId}`);
+  
+        // Delete the landmark category from Firebase
+        await remove(categoryRef);
+        console.log(`Landmark category with ID ${categoryId} deleted from Firebase`);
+      } catch (error) {
+        console.error("Error deleting landmark category from Firebase:", error);
+        return h.response("An internal server error occurred").code(500);
+      }
       return h.redirect("/dashboard");
     },
   },
