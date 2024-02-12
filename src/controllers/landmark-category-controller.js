@@ -1,4 +1,4 @@
-import { TrackSpec } from "../models/joi-schemas.js";
+import { LandmarkSpec } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
 import { getDatabase, ref, get, push, remove } from "firebase/database";
 import { LandmarkCategorySpec } from "../models/joi-schemas.js";
@@ -44,7 +44,7 @@ export const landmarkCategoryController = {
 
   addLandmark: {
     validate: {
-      payload: TrackSpec,
+      payload: LandmarkSpec,
       options: { abortEarly: false },
       failAction: async function (request, h, error) {
         console.log("Validation failed for addLandmark");
@@ -77,7 +77,7 @@ export const landmarkCategoryController = {
       const firebaseDB = getDatabase();
       const userEmail = request.auth.credentials.email.replace(/\./g, ',');
       const newTrack = {
-        title: request.payload.landmarkTitle,
+        landmarkTitle: request.payload.landmarkTitle,
         description: request.payload.description,
         latitude: Number(request.payload.latitude),
         longitude: Number(request.payload.longitude),
@@ -100,7 +100,7 @@ export const landmarkCategoryController = {
 
   deleteTrack: {
     handler: async function (request, h) {
-      const landmarkCategor
+      const landmarkCategory = await db.landmarkCategoryStore.getLandmarkCategoryById(request.params.id);
       await db.trackStore.deleteTrack(request.params.trackid);
       return h.redirect(`/landmarkCategory/${landmarkCategory._id}`);
     },

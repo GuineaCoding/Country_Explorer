@@ -12,10 +12,11 @@ export const UserCredentialsSpec = {
   password: Joi.string().required(),
 };
 
-export const TrackSpec = {
-  title: Joi.string().required(),
-  artist: Joi.string().required(),
-  duration: Joi.number().allow("").optional(),
+export const LandmarkSpec = {
+  landmarkTitle: Joi.string().required(),
+  description: Joi.string().required(),
+  latitude: Joi.number().required(),
+  longitude: Joi.number().required(),
 };
 
 export const LandmarkCategorySpec = {
