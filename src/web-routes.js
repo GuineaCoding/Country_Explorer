@@ -18,6 +18,6 @@ export const webRoutes = [
   { method: "GET", path: "/dashboard/deleteLandmarkCategory/{id}", config: dashboardController.deleteLandmarkCategory },
 
   { method: "GET", path: "/landmarkCategory/{id}", config: landmarkCategoryController.index },
-  { method: "POST", path: "/landmarkCategory/{id}/addtrack", config: landmarkCategoryController.addTrack },
+  { method: "POST", path: "/landmarkCategory/{id}/addLandmark", config: landmarkCategoryController.addLandmark },
   { method: "GET", path: "/landmarkCategory/{id}/deletetrack/{trackid}", config: landmarkCategoryController.deleteTrack },
 ];

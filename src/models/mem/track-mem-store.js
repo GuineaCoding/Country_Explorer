@@ -7,7 +7,7 @@ export const trackMemStore = {
     return tracks;
   },
 
-  async addTrack(playlistId, track) {
+  async addLandmark(playlistId, track) {
     track._id = v4();
     track.playlistid = playlistId;
     tracks.push(track);

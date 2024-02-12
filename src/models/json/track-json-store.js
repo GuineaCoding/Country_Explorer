@@ -7,7 +7,7 @@ export const trackJsonStore = {
     return db.data.tracks;
   },
 
-  async addTrack(playlistId, track) {
+  async addLandmark(playlistId, track) {
     await db.read();
     track._id = v4();
     track.playlistid = playlistId;

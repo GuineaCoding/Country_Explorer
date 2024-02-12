@@ -1,20 +1,20 @@
 <table class="table is-fullwidth">
   <thead>
     <tr>
-      <th>Track</th>
-      <th>Artist</th>
-      <th>Duration</th>
-      <th></th>
+      <th>Landmark Name</th>
+      <th>Description</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
     </tr>
   </thead>
   <tbody>
     {{#each landmarkCategory.tracks}}
       <tr>
         <td>
-          {{title}}
+          {{landmarkTitle}}
         </td>
         <td>
-          {{artist}}
+          {{description}}
         </td>
         <td>
           {{duration}}
