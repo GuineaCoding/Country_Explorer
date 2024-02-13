@@ -19,5 +19,5 @@ export const webRoutes = [
 
   { method: "GET", path: "/landmarkCategory/{id}", config: landmarkCategoryController.index },
   { method: "POST", path: "/landmarkCategory/{id}/addLandmark", config: landmarkCategoryController.addLandmark },
-  { method: "GET", path: "/landmarkCategory/{id}/deletetrack/{trackid}", config: landmarkCategoryController.deleteTrack },
+  { method: "GET", path: "/landmarkCategory/{id}/deleteLandmark/{landmarkId}", config: landmarkCategoryController.deleteLandmark },
 ];
