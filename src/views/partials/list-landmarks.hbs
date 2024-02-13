@@ -5,10 +5,11 @@
       <th>Description</th>
       <th>Latitude</th>
       <th>Longitude</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tbody>
-    {{#each landmarkCategory.tracks}}
+    {{#each landmarkCategory.landmarks}}
       <tr>
         <td>
           {{landmarkTitle}}
@@ -17,10 +18,13 @@
           {{description}}
         </td>
         <td>
-          {{duration}}
+          {{latitude}}
+        </td>
+                <td>
+          {{longitude}}
         </td>
         <td>
-          <a href="/landmarkCategory/{{../landmarkCategory._id}}/deletetrack/{{_id}}" class="ui icon button">
+          <a href="/landmarkCategory/{{../landmarkCategory._id}}/deletetrack/{{landmarks._id}}" class="ui icon button">
             <i class="fas fa-trash"></i>
           </a>
         </td>

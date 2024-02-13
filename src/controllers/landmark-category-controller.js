@@ -1,6 +1,6 @@
 import { LandmarkSpec } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
-import { getDatabase, ref, get, push, remove } from "firebase/database";
+import { getDatabase, ref, get, push, remove, set } from "firebase/database";
 import { LandmarkCategorySpec } from "../models/joi-schemas.js";
 
 export const landmarkCategoryController = {
