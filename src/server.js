@@ -7,7 +7,6 @@ import Joi from "joi";
 import { fileURLToPath } from "url";
 import Handlebars from "handlebars";
 import { webRoutes } from "./web-routes.js";
-import { db } from "./models/db.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import "../firebaseInit.js";
 
@@ -52,7 +51,6 @@ async function init() {
   });
   server.auth.default("session");
 
-  db.init();
   server.route(webRoutes);
   await server.start();
   console.log("Server running on %s", server.info.uri);

@@ -9,6 +9,17 @@ export const landmarkModel = {
     if (landmarkCategorySnap.exists()) {
       let landmarkCategory = landmarkCategorySnap.val();
       landmarkCategory._id = categoryId;
+
+      // Assign _id to each landmark
+      if (landmarkCategory.landmarks) {
+        landmarkCategory.landmarks = Object.keys(landmarkCategory.landmarks).map(landmarkKey => {
+          return {
+            _id: landmarkKey,
+            ...landmarkCategory.landmarks[landmarkKey]
+          };
+        });
+      }
+
       return landmarkCategory;
     }
     return null;
