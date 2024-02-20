@@ -6,9 +6,17 @@ import path from "path";
 import Joi from "joi";
 import { fileURLToPath } from "url";
 import Handlebars from "handlebars";
+import admin from "firebase-admin";
+import serviceAccount from '../strategic-reef-146715-firebase-adminsdk-xvlx3-d16ab10c2d.json' assert { type: 'json' };
 import { webRoutes } from "./web-routes.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import "../firebaseInit.js";
+
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: "gs://strategic-reef-146715.appspot.com"
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -55,6 +63,8 @@ async function init() {
   await server.start();
   console.log("Server running on %s", server.info.uri);
 }
+
+
 
 process.on("unhandledRejection", (err) => {
   console.log(err);
