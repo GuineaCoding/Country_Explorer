@@ -21,7 +21,7 @@
 - landmark controller + view & partials added
 - support adding trackApi to landmarks
 - introduce sessions
-- associate landmarks with userApi
+- associate landmarks with accountApi
 
 ## version 0.1.0
 

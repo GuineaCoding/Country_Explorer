@@ -11,7 +11,7 @@ import serviceAccount from '../strategic-reef-146715-firebase-adminsdk-xvlx3-d16
 import { webRoutes } from "./web-routes.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import "../firebaseInit.js";
-
+import { apiRoutes } from "./api-routes.js"; 
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -60,6 +60,7 @@ async function init() {
   server.auth.default("session");
 
   server.route(webRoutes);
+  server.route(apiRoutes); 
   await server.start();
   console.log("Server running on %s", server.info.uri);
 }
