@@ -66,4 +66,29 @@ export const landmarkCategoryController = {
       }
     }
   },
+
+  uploadFile: {
+    handler: async function (request, h) {
+      const payload = request.payload
+      const landmarkId = request.params.id
+      console.log("paylaod", payload)
+      console.log("id: ", landmarkId)
+      try {
+        const resp = await landmarkModel.uploadFile(landmarkId, payload.file)
+
+        console.log("upload response", resp)
+
+      } catch (error) {
+        console.error("could not upload file", error)
+      }
+
+      return "received"
+    },
+    payload: {
+      output: 'data',
+      parse: true,
+      allow: 'multipart/form-data',
+      multipart: true
+    }
+  },
 };

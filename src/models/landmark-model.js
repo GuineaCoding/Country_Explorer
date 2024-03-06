@@ -1,5 +1,6 @@
 // landmark-model.js
 import { getDatabase, ref, get, push, remove, set } from "firebase/database";
+import { getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
 
 export const landmarkModel = {
   async getLandmarkCategory(userEmail, categoryId) {
@@ -36,5 +37,17 @@ export const landmarkModel = {
     const firebaseDB = getDatabase();
     const landmarkRef = ref(firebaseDB, `users/${userEmail}/landmarkCategories/${categoryId}/landmarks/${landmarkId}`);
     await remove(landmarkRef);
-  }
+  },
+
+  async uploadFile(landmarkId, file) {
+    const storage = getStorage();
+    const storageRef = refStorage(storage, landmarkId);
+
+    const metadata = {
+      contentType: 'image/png',
+    };
+    
+    await uploadBytes(storageRef, file, metadata)
+  },
+
 };

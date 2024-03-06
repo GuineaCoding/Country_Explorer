@@ -11,10 +11,15 @@
       <div class="field">
         <input class="input" type="text" placeholder="Enter Latitude" name="latitude">
       </div>
-            <div class="field">
+      <div class="field">
         <input class="input" type="text" placeholder="Enter Longitude" name="longitude">
       </div>
     </div>
   </div>
   <button class="button is-primary">Add Track</button>
+</form>
+<form action="/landmarkCategory/{{landmarkCategory._id}}/file"
+    enctype="multipart/form-data" method="POST">
+  <input type="file" name="file">
+  <input type="submit">
 </form>
