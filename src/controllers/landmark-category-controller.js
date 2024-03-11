@@ -66,6 +66,43 @@ export const landmarkCategoryController = {
       }
     }
   },
+  showEditLandmark: {
+    handler: async function(request, h) {
+      const categoryId = request.params.categoryId;
+      const landmarkId = request.params.landmarkId;
+      const userEmail = request.auth.credentials.email.replace(/\./g, ',');
+      try {
+        const landmark = await landmarkModel.getLandmark(userEmail, categoryId, landmarkId);
+        return h.view("edit-landmark-view", { title: "Edit Landmark", landmark: landmark });
+      } catch (error) {
+        console.error("Error in showEditLandmark handler:", error);
+        return h.response("An internal server error occurred").code(500);
+      }
+    }
+  },
+
+  updateLandmark: {
+    handler: async function(request, h) {
+      const categoryId = request.params.categoryId;
+      const landmarkId = request.params.landmarkId;
+      const userEmail = request.auth.credentials.email.replace(/\./g, ',');
+      const updatedData = request.payload;
+  
+      console.log(`UpdateLandmark handler invoked for Category ID: ${categoryId}, Landmark ID: ${landmarkId}`);
+      console.log(`User Email: ${userEmail}`);
+      console.log(`Updated Data: ${JSON.stringify(updatedData)}`);
+  
+      try {
+        console.log('Attempting to update landmark in model...');
+        await landmarkModel.updateLandmark(userEmail, categoryId, landmarkId, updatedData);
+        console.log('Landmark updated successfully. Redirecting...');
+        return h.redirect(`/landmarkCategory/${categoryId}`);
+      } catch (error) {
+        console.error("Error in updateLandmark handler:", error);
+        return h.response("An internal server error occurred").code(500);
+      }
+    }
+  },
 
   uploadFile: {
     handler: async function (request, h) {

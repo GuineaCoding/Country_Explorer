@@ -39,6 +39,22 @@ export const landmarkModel = {
     await remove(landmarkRef);
   },
 
+  async getLandmark(userEmail, categoryId, landmarkId) {
+    const firebaseDB = getDatabase();
+    const landmarkRef = ref(firebaseDB, `users/${userEmail}/landmarkCategories/${categoryId}/landmarks/${landmarkId}`);
+    const snapshot = await get(landmarkRef);
+    if (snapshot.exists()) {
+      return { _id: landmarkId, ...snapshot.val() };
+    }
+    return null;
+  },
+
+  async updateLandmark(userEmail, categoryId, landmarkId, updatedData) {
+    const firebaseDB = getDatabase();
+    const landmarkRef = ref(firebaseDB, `users/${userEmail}/landmarkCategories/${categoryId}/landmarks/${landmarkId}`);
+    await set(landmarkRef, updatedData);
+  },
+
   async uploadFile(landmarkId, file) {
     const storage = getStorage();
     const storageRef = refStorage(storage, landmarkId);

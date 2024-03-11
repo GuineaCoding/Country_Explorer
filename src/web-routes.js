@@ -21,4 +21,6 @@ export const webRoutes = [
   { method: "POST", path: "/landmarkCategory/{id}/addLandmark", config: landmarkCategoryController.addLandmark },
   { method: "GET", path: "/landmarkCategory/{id}/deleteLandmark/{landmarkId}", config: landmarkCategoryController.deleteLandmark },
   { method: "POST", path: "/landmarkCategory/{id}/file", config: landmarkCategoryController.uploadFile },
+  { method: "GET", path: "/landmarkCategory/{categoryId}/editLandmark/{landmarkId}", config: landmarkCategoryController.showEditLandmark},
+  { method: "POST", path: "/landmarkCategory/{categoryId}/updateLandmark/{landmarkId}", config: landmarkCategoryController.updateLandmark}
 ];

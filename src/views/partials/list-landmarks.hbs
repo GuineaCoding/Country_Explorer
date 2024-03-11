@@ -5,6 +5,7 @@
       <th>Description</th>
       <th>Latitude</th>
       <th>Longitude</th>
+      <th>Edit</th>
       <th>Delete</th>
     </tr>
   </thead>
@@ -23,6 +24,11 @@
                 <td>
           {{longitude}}
         </td>
+        <td>
+  <a href="/landmarkCategory/{{../landmarkCategory._id}}/editLandmark/{{_id}}" class="ui icon button">
+    <i class="fas fa-edit"></i>
+  </a>
+</td>
 <td>
   <a href="/landmarkCategory/{{../landmarkCategory._id}}/deleteLandmark/{{_id}}" class="ui icon button">
     <i class="fas fa-trash"></i>

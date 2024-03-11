@@ -1,0 +1,36 @@
+{{> menu active="dashboard"}}
+<form class="box" action="/landmarkCategory/{{landmark._id}}/updateLandmark" method="POST">
+  <h1 class="title">Edit Landmark</h1>
+
+  <div class="field">
+    <label class="label">Landmark Title</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Enter Landmark Title" name="landmarkTitle" value="{{landmark.landmarkTitle}}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Description</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Enter Description" name="description" value="{{landmark.description}}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Latitude</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Enter Latitude" name="latitude" value="{{landmark.latitude}}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Longitude</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Enter Longitude" name="longitude" value="{{landmark.longitude}}">
+    </div>
+  </div>
+
+  <div class="control">
+    <button class="button is-primary" type="submit">Update Landmark</button>
+  </div>
+</form>
