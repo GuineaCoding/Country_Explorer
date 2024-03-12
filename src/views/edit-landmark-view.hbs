@@ -1,6 +1,9 @@
 {{> menu active="dashboard"}}
-<form class="box" action="/landmarkCategory/{{landmark._id}}/updateLandmark" method="POST">
+<form class="box" action="/landmarkCategory/{{landmarkCategory._id}}/updateLandmark/{{landmark._id}}" method="POST">
   <h1 class="title">Edit Landmark</h1>
+
+  <p>Landmark Category ID: {{landmarkCategory._id}}</p>
+<p>Landmark ID: {{landmark._id}}</p>
 
   <div class="field">
     <label class="label">Landmark Title</label>

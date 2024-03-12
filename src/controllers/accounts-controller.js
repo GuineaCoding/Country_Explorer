@@ -1,5 +1,5 @@
 import { UserSpec, UserCredentialsSpec } from "../models/joi-schemas.js";
-import { accountsModel } from "../models/accounts-model.js"; 
+import { accountsModel } from "../models/accounts-model.js";
 
 export const accountsController = {
   index: {
@@ -83,5 +83,48 @@ export const accountsController = {
       console.error("Error during session validation:", error);
       return { isValid: false };
     }
+  },
+
+  showEditProfile: {
+    handler: async function (request, h) {
+      if (!request.auth.isAuthenticated) {
+        return h.redirect('/login');
+      }
+      const userEmail = request.auth.credentials.email;
+      try {
+        const user = await accountsModel.getUserByEmail(userEmail);
+        return h.view("edit-profile-view", { title: "Edit Profile", user: user });
+      } catch (error) {
+        console.error("Error in showEditProfile:", error);
+        return h.response("An internal server error occurred").code(500);
+      }
+    },
+  },
+
+  updateProfile: {
+    validate: {
+      payload: UserSpec,
+      options: { abortEarly: false },
+      failAction: function (request, h, error) {
+        return h.view("edit-profile-view", { title: "Edit Profile error", errors: error.details }).takeover().code(400);
+      },
+    },
+    handler: async function(request, h) {
+      if (!request.auth.isAuthenticated) {
+        return h.redirect('/login');
+      }
+  
+      const userEmail = request.auth.credentials.email;
+      console.log('User Email:', userEmail); 
+  
+      try {
+        const updatedUserData = request.payload; 
+        await accountsModel.updateUser(userEmail, updatedUserData);
+        return h.redirect("/dashboard");
+      } catch (error) {
+        console.error("Error in updateProfile:", error);
+        return h.response("An internal server error occurred").code(500);
+      }
+    },
   },
 };

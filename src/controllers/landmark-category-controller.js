@@ -72,14 +72,20 @@ export const landmarkCategoryController = {
       const landmarkId = request.params.landmarkId;
       const userEmail = request.auth.credentials.email.replace(/\./g, ',');
       try {
+        const landmarkCategory = await landmarkModel.getLandmarkCategory(userEmail, categoryId);
         const landmark = await landmarkModel.getLandmark(userEmail, categoryId, landmarkId);
-        return h.view("edit-landmark-view", { title: "Edit Landmark", landmark: landmark });
+        return h.view("edit-landmark-view", { 
+          title: "Edit Landmark", 
+          landmarkCategory: landmarkCategory, 
+          landmark: landmark 
+        });
       } catch (error) {
         console.error("Error in showEditLandmark handler:", error);
         return h.response("An internal server error occurred").code(500);
       }
     }
-  },
+  }
+  ,
 
   updateLandmark: {
     handler: async function(request, h) {
@@ -87,6 +93,7 @@ export const landmarkCategoryController = {
       const landmarkId = request.params.landmarkId;
       const userEmail = request.auth.credentials.email.replace(/\./g, ',');
       const updatedData = request.payload;
+      
   
       console.log(`UpdateLandmark handler invoked for Category ID: ${categoryId}, Landmark ID: ${landmarkId}`);
       console.log(`User Email: ${userEmail}`);

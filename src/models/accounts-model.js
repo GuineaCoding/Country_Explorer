@@ -12,11 +12,28 @@ export const accountsModel = {
     const firebaseDB = getDatabase();
     const userRef = ref(firebaseDB, `users/${sanitizedEmail}`);
     const userSnap = await get(userRef);
-    
+
     if (userSnap.exists()) {
       return userSnap.val();
     } else {
       return null;
     }
+  },
+  async updateUser(userEmail, updateData) {
+    const firebaseDB = getDatabase();
+    const sanitizedEmail = userEmail.replace(/\./g, ",");
+    const userRef = ref(firebaseDB, `users/${sanitizedEmail}`);
+  
+    // Check if the user exists
+    const snapshot = await get(userRef);
+    if (!snapshot.exists()) {
+      throw new Error('User not found');
+    }
+  
+    // Update only the necessary fields
+    await set(userRef, {
+      ...snapshot.val(),
+      ...updateData
+    });
   }
 };

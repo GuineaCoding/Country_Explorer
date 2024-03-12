@@ -1,0 +1,22 @@
+<form class="box" action="/profile/update" method="POST">
+  <h1 class="title">Edit Profile</h1>
+  <div class="field">
+    <label class="label">Email</label>
+    <input class="input" type="email" name="email" value="{{user.email}}" required>
+  </div>
+    <div class="field">
+    <label class="label">First Name</label>
+    <input class="input" type="firstName" name="firstName" value="{{user.firstName}}" required>
+  </div>
+    <div class="field">
+    <label class="label">Last Name</label>
+    <input class="input" type="lastName" name="lastName" value="{{user.lastName}}" required>
+  </div>
+  <div class="field">
+    <label class="label">Password</label>
+    <input class="input" type="password" name="password" required>
+  </div>
+  <div class="field">
+    <button class="button is-primary" type="submit">Update Profile</button>
+  </div>
+</form>

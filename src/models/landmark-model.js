@@ -49,11 +49,19 @@ export const landmarkModel = {
     return null;
   },
 
-  async updateLandmark(userEmail, categoryId, landmarkId, updatedData) {
+async updateLandmark(userEmail, categoryId, landmarkId, updatedData) {
+  try {
     const firebaseDB = getDatabase();
     const landmarkRef = ref(firebaseDB, `users/${userEmail}/landmarkCategories/${categoryId}/landmarks/${landmarkId}`);
-    await set(landmarkRef, updatedData);
-  },
+
+ 
+    const plainUpdatedData = JSON.parse(JSON.stringify(updatedData));
+    await set(landmarkRef, plainUpdatedData);
+  } catch (error) {
+    console.error('Error updating landmark:', error);
+    throw error;  
+  }
+},
 
   async uploadFile(landmarkId, file) {
     const storage = getStorage();
