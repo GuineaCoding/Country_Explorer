@@ -1,0 +1,38 @@
+<section class="section">
+    <div class="container">
+        <h1 class="title">Edit User</h1>
+        <form action="/admin/updateUser" method="POST">
+            <!-- Hidden field for original email -->
+            <input type="hidden" name="originalEmail" value="{{user.email}}">
+
+            <div class="field">
+                <label class="label">Email</label>
+                <input class="input" type="email" name="email" value="{{user.email}}">
+            </div>
+            <div class="field">
+                <label class="label">First Name</label>
+                <input class="input" type="text" name="firstName" value="{{user.firstName}}">
+            </div>
+            <div class="field">
+                <label class="label">Last Name</label>
+                <input class="input" type="text" name="lastName" value="{{user.lastName}}">
+            </div>
+            <div class="field">
+                <label class="label">Password</label>
+                <input class="input" type="password" name="password" value="{{user.password}}">
+            </div>
+            <div class="field">
+                <label class="label">Role</label>
+                <div class="select">
+                    <select name="role">
+                        <option value="user" {{#if (equal user.role "user")}}selected{{/if}}>User</option>
+                        <option value="admin" {{#if (equal user.role "admin")}}selected{{/if}}>Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <button class="button is-primary" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</section>

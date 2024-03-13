@@ -1,0 +1,35 @@
+<!-- admin-view.hbs -->
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">Admin Dashboard</h1>
+        
+        <table class="table is-fullwidth is-striped">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                <tr>
+                    <td>{{this.email}}</td>
+                    <td>{{this.role}}</td>
+                    <td>
+                        <a class="button is-info is-small" href="/admin/editUser/{{@key}}">
+                            <span class="icon"><i class="fas fa-edit"></i></span>
+                            <span>Edit</span>
+                        </a>
+                        <a class="button is-danger is-small" href="/admin/deleteUser/{{this.email}}">
+                            <span class="icon"><i class="fas fa-trash"></i></span>
+                            <span>Delete</span>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>

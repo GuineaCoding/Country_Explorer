@@ -5,13 +5,14 @@ import dotenv from "dotenv";
 import path from "path";
 import Joi from "joi";
 import { fileURLToPath } from "url";
-import Handlebars from "handlebars";
 import admin from "firebase-admin";
 import serviceAccount from '../strategic-reef-146715-firebase-adminsdk-xvlx3-d16ab10c2d.json' assert { type: 'json' };
 import { webRoutes } from "./web-routes.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import "../firebaseInit.js";
 import { apiRoutes } from "./api-routes.js"; 
+import Handlebars from 'handlebars';
+Handlebars.registerHelper('equal', (a, b) => a === b);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

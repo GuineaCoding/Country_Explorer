@@ -2,6 +2,7 @@ import { aboutController } from "./controllers/about-controller.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { landmarkCategoryController } from "./controllers/landmark-category-controller.js";
+import { adminController } from "./controllers/admin-controller.js";
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -25,4 +26,8 @@ export const webRoutes = [
   { method: "POST", path: "/landmarkCategory/{categoryId}/updateLandmark/{landmarkId}", config: landmarkCategoryController.updateLandmark},
   { method: "GET", path: "/profile", config: accountsController.showEditProfile },
   { method: "POST", path: "/profile/update", config: accountsController.updateProfile },
+  { method: "GET", path: "/admin", config: adminController.index },
+  { method: "GET", path: "/admin/deleteUser/{email}", config: adminController.deleteUser },
+  { method: "GET",  path: "/admin/editUser/{email}", config: adminController.showEditUser },
+  { method: "POST", path: "/admin/updateUser", config: adminController.updateUser },
 ];
