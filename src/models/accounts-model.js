@@ -12,11 +12,16 @@ export const accountsModel = {
   },
 
   async getUserByEmail(email) {
+    console.log("getUserByEmail called with email:", email);
+    if (!email) {
+      console.error("Email is undefined in getUserByEmail");
+      throw new Error("Email is undefined"); // Explicitly throw an error to make it more visible where the problem lies
+    }
     const sanitizedEmail = email.replace(/\./g, ",");
     const firebaseDB = getDatabase();
     const userRef = ref(firebaseDB, `users/${sanitizedEmail}`);
     const userSnap = await get(userRef);
-
+  
     if (userSnap.exists()) {
       return userSnap.val();
     } else {

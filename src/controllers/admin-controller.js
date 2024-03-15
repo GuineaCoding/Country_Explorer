@@ -48,7 +48,7 @@ export const adminController = {
 
     updateUser: {
         handler: async function(request, h) {
-          const originalEmail = request.payload.originalEmail; // Retrieve the original email
+          const originalEmail = request.payload.originalEmail; 
           const updatedData = {
             email: request.payload.email,
             firstName: request.payload.firstName,

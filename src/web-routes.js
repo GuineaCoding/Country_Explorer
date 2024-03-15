@@ -3,6 +3,7 @@ import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { landmarkCategoryController } from "./controllers/landmark-category-controller.js";
 import { adminController } from "./controllers/admin-controller.js";
+import { editAccountController } from "./controllers/edit-Account-Controller.js";
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -24,8 +25,8 @@ export const webRoutes = [
   { method: "POST", path: "/landmarkCategory/{id}/file", config: landmarkCategoryController.uploadFile },
   { method: "GET", path: "/landmarkCategory/{categoryId}/editLandmark/{landmarkId}", config: landmarkCategoryController.showEditLandmark},
   { method: "POST", path: "/landmarkCategory/{categoryId}/updateLandmark/{landmarkId}", config: landmarkCategoryController.updateLandmark},
-  { method: "GET", path: "/profile", config: accountsController.showEditProfile },
-  { method: "POST", path: "/profile/update", config: accountsController.updateProfile },
+  { method: "GET", path: "/profile", config: editAccountController.showEditProfile },
+  { method: "POST", path: "/profile/update", config: editAccountController.updateProfile },  
   { method: "GET", path: "/admin", config: adminController.index },
   { method: "GET", path: "/admin/deleteUser/{email}", config: adminController.deleteUser },
   { method: "GET",  path: "/admin/editUser/{email}", config: adminController.showEditUser },
