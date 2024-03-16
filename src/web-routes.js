@@ -31,4 +31,7 @@ export const webRoutes = [
   { method: "GET", path: "/admin/deleteUser/{email}", config: adminController.deleteUser },
   { method: "GET",  path: "/admin/editUser/{email}", config: adminController.showEditUser },
   { method: "POST", path: "/admin/updateUser", config: adminController.updateUser },
+  { method: ['GET', 'POST'],  path: '/{any*}', handler: function (request, h) { return h.view('not-found-view', { title: 'Not Found' }).code(404);
+    }
+  }
 ];

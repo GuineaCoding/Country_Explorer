@@ -12,16 +12,16 @@ export const accountsModel = {
   },
 
   async getUserByEmail(email) {
-    console.log("getUserByEmail called with email:", email);
+    // Ensure email is not undefined or null
     if (!email) {
       console.error("Email is undefined in getUserByEmail");
-      throw new Error("Email is undefined"); // Explicitly throw an error to make it more visible where the problem lies
+      throw new Error("Email is undefined");
     }
     const sanitizedEmail = email.replace(/\./g, ",");
     const firebaseDB = getDatabase();
     const userRef = ref(firebaseDB, `users/${sanitizedEmail}`);
     const userSnap = await get(userRef);
-  
+
     if (userSnap.exists()) {
       return userSnap.val();
     } else {
@@ -40,18 +40,17 @@ export const accountsModel = {
       throw new Error('User not found');
     }
   
-    let updatedUserRef = userRef;
+    // If the email has been updated, handle the email update process
     if (updatedData.email && updatedData.email !== originalEmail) {
       const newSanitizedEmail = updatedData.email.replace(/\./g, ",");
-      updatedUserRef = ref(firebaseDB, `users/${newSanitizedEmail}`);
-    }
-  
-    await set(updatedUserRef, { ...snapshot.val(), ...updatedData });
-  
-    if (updatedData.email && updatedData.email !== originalEmail) {
+      const newUserRef = ref(firebaseDB, `users/${newSanitizedEmail}`);
+      
+      // Create new record with updated email and remove the old record
+      await set(newUserRef, { ...snapshot.val(), ...updatedData });
       await remove(userRef);
+    } else {
+      // If email hasn't changed, just update the existing record
+      await set(userRef, { ...snapshot.val(), ...updatedData });
     }
-  }
-  
-
+  }  
 };

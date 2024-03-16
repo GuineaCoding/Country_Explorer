@@ -9,8 +9,16 @@ export const accountsController = {
     },
   },
   showSignup: {
-    auth: false,
+    auth: {
+      mode: 'try',
+      strategy: 'session'
+    },
     handler: function (request, h) {
+      if (request.auth.isAuthenticated) {
+        // User is already logged in, redirect to dashboard
+        return h.redirect("/dashboard");
+      }
+      // Show the signup page if not authenticated
       return h.view("signup-view", { title: "Sign up for Country Explorer" });
     },
   },
@@ -35,8 +43,16 @@ export const accountsController = {
     },
   },
   showLogin: {
-    auth: false,
+    auth: {
+      mode: 'try',
+      strategy: 'session'
+    },
     handler: function (request, h) {
+      if (request.auth.isAuthenticated) {
+        // User is already logged in, redirect to dashboard
+        return h.redirect("/dashboard");
+      }
+      // Show the login page if not authenticated
       return h.view("login-view", { title: "Login to Country Explorer" });
     },
   },
@@ -72,8 +88,23 @@ export const accountsController = {
     },
   },
   validate: async function (request, session) {
+    // Check if the session object is an array and use the first element if so
+    if (Array.isArray(session)) {
+      console.log("Session is an array. Using the first email:", session[0].email);
+      session = session[0];
+    }
+  
+    // Check if session.email is defined
+    if (!session || !session.email) {
+      console.error("Session email is undefined.");
+      return { isValid: false };
+    }
+  
     try {
+      console.log("Session Email in validate function:", session.email);
       const user = await accountsModel.getUserByEmail(session.email);
+      console.log("User found in validate function:", user);
+  
       if (user) {
         return { isValid: true, credentials: user };
       } else {
