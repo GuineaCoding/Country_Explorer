@@ -1,5 +1,9 @@
 import { getDatabase, ref, get, set, remove } from "firebase/database";
 
+function sanitizeEmail(email) {
+  return email.replace(/\./g, ",");
+}
+
 export const accountsModel = {
   async createUser(user) {
     const firebaseDB = getDatabase();
@@ -12,7 +16,6 @@ export const accountsModel = {
   },
 
   async getUserByEmail(email) {
-    // Ensure email is not undefined or null
     if (!email) {
       console.error("Email is undefined in getUserByEmail");
       throw new Error("Email is undefined");
@@ -40,17 +43,29 @@ export const accountsModel = {
       throw new Error('User not found');
     }
   
-    // If the email has been updated, handle the email update process
     if (updatedData.email && updatedData.email !== originalEmail) {
       const newSanitizedEmail = updatedData.email.replace(/\./g, ",");
       const newUserRef = ref(firebaseDB, `users/${newSanitizedEmail}`);
       
-      // Create new record with updated email and remove the old record
       await set(newUserRef, { ...snapshot.val(), ...updatedData });
       await remove(userRef);
     } else {
-      // If email hasn't changed, just update the existing record
       await set(userRef, { ...snapshot.val(), ...updatedData });
     }
-  }  
+  },
+  async updateUserAnalytics(email, newLoginData) {
+    const firebaseDB = getDatabase();
+    const sanitizedEmail = sanitizeEmail(email); 
+    const userAnalyticsRef = ref(firebaseDB, `users/${sanitizedEmail}/analytics`);
+
+   
+    const analyticsSnapshot = await get(userAnalyticsRef);
+    let analytics = analyticsSnapshot.exists() ? analyticsSnapshot.val() : { loginCount: 0, logins: [] };
+
+    analytics.loginCount += 1;
+    analytics.logins.push(newLoginData);
+
+
+    await set(userAnalyticsRef, analytics);
+  },
 };
