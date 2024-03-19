@@ -78,4 +78,19 @@ export const adminController = {
           }
         }
       },
+      viewUserStatistics: {
+        handler: async function (request, h) {
+            try {
+                const allUserAnalytics = await adminModel.getAllUserAnalytics();
+
+                return h.view('view-user-statistics', {
+                    title: 'User Statistics',
+                    analytics: allUserAnalytics
+                });
+            } catch (error) {
+                console.error("Error in viewUserStatistics:", error);
+                return h.response("An internal server error occurred").code(500);
+            }
+        }
+    },
 };

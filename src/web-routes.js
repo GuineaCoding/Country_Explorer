@@ -36,4 +36,5 @@ export const webRoutes = [
     }
   },
   { method: "GET", path: "/admin-panel", config: adminController.adminPanel },
+  { method: "GET", path: "/view-user-statistics", config: adminController.viewUserStatistics },
 ];

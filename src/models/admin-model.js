@@ -18,4 +18,20 @@ export const adminModel = {
         const userRef = ref(db, `users/${sanitizedEmail}`);
         await remove(userRef);
     },
+    async getAllUserAnalytics() {
+        const firebaseDB = getDatabase();
+        const usersRef = ref(firebaseDB, `users/`);
+        const snapshot = await get(usersRef);
+      
+        let analyticsData = {};
+        if (snapshot.exists()) {
+          const users = snapshot.val();
+          Object.keys(users).forEach(userId => {
+            if (users[userId].analytics) {
+              analyticsData[userId] = users[userId].analytics;
+            }
+          });
+        }
+        return analyticsData;
+      }
 };

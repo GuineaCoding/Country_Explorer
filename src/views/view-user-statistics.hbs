@@ -1,0 +1,17 @@
+<h1>User Statistics</h1>
+
+{{#each analytics}}
+  <div>
+    <h2>User: {{@key}}</h2>
+    <p>Login Count: {{this.loginCount}}</p>
+    <ul>
+      {{#each this.logins}}
+        <li>
+          Date: {{this.date}}, 
+          Device: {{this.deviceInfo}}, 
+          IP: {{this.ip}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+{{/each}}
