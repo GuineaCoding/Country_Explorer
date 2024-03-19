@@ -70,11 +70,12 @@ export const accountsController = {
           request.cookieAuth.set({ id: user._id, email: user.email });
 
           const analyticsData = {
-            date: new Date().toISOString(),
-            deviceInfo: request.headers['user-agent'],
-            ip: request.info.remoteAddress,
+            date: new Date().toISOString().replace("T", " ").replace(/\..+/, ""),
+            deviceInfo: request.headers["user-agent"],
+            ip: request.headers["x-forwarded-for"] || request.info.remoteAddress,
           };
-
+          
+          
           await accountsModel.updateUserAnalytics(user.email, analyticsData);
 
           return h.redirect("/dashboard");
