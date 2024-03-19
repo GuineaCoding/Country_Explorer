@@ -5,12 +5,14 @@ export const dashboardController = {
   index: {
     handler: async function (request, h) {
       const userEmail = request.auth.credentials.email.replace(/\./g, ",");
+      const isAdmin = request.auth.credentials.role === "admin";
       try {
         const landmarkCategories = await dashboardModel.getUserLandmarkCategories(userEmail);
         return h.view("dashboard-view", {
           title: "Playtime Dashboard",
           user: request.auth.credentials,
           landmarkCategories: landmarkCategories,
+          isAdmin: isAdmin 
         });
       } catch (error) {
         console.error("Error in dashboard index handler:", error);

@@ -12,6 +12,7 @@ import { accountsController } from "./controllers/accounts-controller.js";
 import "../firebaseInit.js";
 import { apiRoutes } from "./api-routes.js"; 
 import Handlebars from 'handlebars';
+import Inert from '@hapi/inert';
 Handlebars.registerHelper('equal', (a, b) => a === b);
 
 admin.initializeApp({
@@ -48,6 +49,18 @@ async function init() {
     layout: true,
     isCached: false,
   });
+
+  await server.register(Inert);
+  server.route({
+    method: 'GET',
+    path: '/public/{param*}',
+    handler: {
+        directory: {
+            path: path.join(__dirname, 'public'),
+            listing: true
+        }
+    }
+});
 
   server.auth.strategy("session", "cookie", {
     cookie: {

@@ -4,6 +4,7 @@ import { dashboardController } from "./controllers/dashboard-controller.js";
 import { landmarkCategoryController } from "./controllers/landmark-category-controller.js";
 import { adminController } from "./controllers/admin-controller.js";
 import { editAccountController } from "./controllers/edit-Account-Controller.js";
+import { isAdmin } from "./utils/utils.js";
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -31,7 +32,7 @@ export const webRoutes = [
   { method: "GET", path: "/admin/deleteUser/{email}", config: adminController.deleteUser },
   { method: "GET",  path: "/admin/editUser/{email}", config: adminController.showEditUser },
   { method: "POST", path: "/admin/updateUser", config: adminController.updateUser },
-  { method: ['GET', 'POST'],  path: '/{any*}', handler: function (request, h) { return h.view('not-found-view', { title: 'Not Found' }).code(404);
+  { method: ["GET", "POST"],  path: "/{any*}", handler: function (request, h) { return h.view("not-found-view", { title: "Not Found" }).code(404);
     }
-  }
+  },
 ];

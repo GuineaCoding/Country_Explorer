@@ -1,5 +1,5 @@
 import { LandmarkSpec } from "../models/joi-schemas.js";
-import { landmarkModel } from "../models/landmark-model.js"; // Ensure the path is correct
+import { landmarkModel } from "../models/landmark-model.js"; 
 
 export const landmarkCategoryController = {
   index: {
@@ -91,7 +91,7 @@ export const landmarkCategoryController = {
     handler: async function(request, h) {
       const categoryId = request.params.categoryId;
       const landmarkId = request.params.landmarkId;
-      const userEmail = request.auth.credentials.email.replace(/\./g, ',');
+      const userEmail = request.auth.credentials.email.replace(/\./g, ",");
       const updatedData = request.payload;
       
   
@@ -100,9 +100,9 @@ export const landmarkCategoryController = {
       console.log(`Updated Data: ${JSON.stringify(updatedData)}`);
   
       try {
-        console.log('Attempting to update landmark in model...');
+        console.log("Attempting to update landmark in model...");
         await landmarkModel.updateLandmark(userEmail, categoryId, landmarkId, updatedData);
-        console.log('Landmark updated successfully. Redirecting...');
+        console.log("Landmark updated successfully. Redirecting...");
         return h.redirect(`/landmarkCategory/${categoryId}`);
       } catch (error) {
         console.error("Error in updateLandmark handler:", error);
@@ -129,9 +129,9 @@ export const landmarkCategoryController = {
       return "received"
     },
     payload: {
-      output: 'data',
+      output: "data",
       parse: true,
-      allow: 'multipart/form-data',
+      allow: "multipart/form-data",
       multipart: true
     }
   },
