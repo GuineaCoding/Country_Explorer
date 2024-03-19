@@ -1,17 +1,21 @@
-<h1>User Statistics</h1>
+{{> menu}}
 
-{{#each analytics}}
-  <div>
-    <h2>User: {{@key}}</h2>
-    <p>Login Count: {{this.loginCount}}</p>
-    <ul>
-      {{#each this.logins}}
-        <li>
-          Date: {{this.date}}, 
-          Device: {{this.deviceInfo}}, 
-          IP: {{this.ip}}
-        </li>
-      {{/each}}
-    </ul>
+<section class="section">
+  <div class="container">
+    <h1 class="title">User Statistics</h1>
+
+    {{#each analytics}}
+      <div class="box">
+        <h2 class="subtitle">User: {{@key}}</h2>
+        <p><strong>Login Count:</strong> {{this.loginCount}}</p>
+        {{#each this.logins}}
+          <div class="content">
+            <p><strong>Date:</strong> {{this.date}}</p>
+            <p><strong>Device:</strong> {{this.deviceInfo}}</p>
+            <p><strong>IP:</strong> {{this.ip}}</p>
+          </div>
+        {{/each}}
+      </div>
+    {{/each}}
   </div>
-{{/each}}
+</section>
