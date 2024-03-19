@@ -6,6 +6,7 @@ export const landmarkCategoryController = {
     handler: async function (request, h) {
       const categoryId = request.params.id;
       const userEmail = request.auth.credentials.email.replace(/\./g, ",");
+      const isAdmin = request.auth.credentials && request.auth.credentials.role === "admin";
       try {
         const landmarkCategory = await landmarkModel.getLandmarkCategory(userEmail, categoryId);
         if (!landmarkCategory) {
@@ -14,6 +15,7 @@ export const landmarkCategoryController = {
         return h.view("landmarkCategory-view", {
           title: "Landmark Category",
           landmarkCategory: landmarkCategory,
+          isAdmin: isAdmin
         });
       } catch (error) {
         console.error("Error in index handler:", error);
@@ -35,7 +37,7 @@ export const landmarkCategoryController = {
     },
     handler: async function (request, h) {
       const categoryId = request.params.id;
-      const userEmail = request.auth.credentials.email.replace(/\./g, ',');
+      const userEmail = request.auth.credentials.email.replace(/\./g, ",");
       const newLandmark = {
         landmarkTitle: request.payload.landmarkTitle,
         description: request.payload.description,
@@ -56,7 +58,7 @@ export const landmarkCategoryController = {
     handler: async function (request, h) {
       const categoryId = request.params.id;
       const landmarkId = request.params.landmarkId;
-      const userEmail = request.auth.credentials.email.replace(/\./g, ',');
+      const userEmail = request.auth.credentials.email.replace(/\./g, ",");
       try {
         await landmarkModel.deleteLandmark(userEmail, categoryId, landmarkId);
         return h.redirect(`/landmarkCategory/${categoryId}`);
@@ -70,7 +72,7 @@ export const landmarkCategoryController = {
     handler: async function(request, h) {
       const categoryId = request.params.categoryId;
       const landmarkId = request.params.landmarkId;
-      const userEmail = request.auth.credentials.email.replace(/\./g, ',');
+      const userEmail = request.auth.credentials.email.replace(/\./g, ",");
       try {
         const landmarkCategory = await landmarkModel.getLandmarkCategory(userEmail, categoryId);
         const landmark = await landmarkModel.getLandmark(userEmail, categoryId, landmarkId);

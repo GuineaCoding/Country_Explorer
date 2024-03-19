@@ -6,13 +6,15 @@ export const adminController = {
         handler: async function(request, h) {
             try {
                 const users = await adminModel.getAllUsers();
-                return h.view('admin-view', {
-                    title: 'Admin Dashboard',
-                    users: users
+                const isAdmin = request.auth.credentials && request.auth.credentials.role === "admin";
+                return h.view("admin-view", {
+                    title: "Admin Dashboard",
+                    users: users,
+                    isAdmin: isAdmin
                 });
             } catch (error) {
-                console.error('Error in admin index:', error);
-                return h.response('Internal Server Error').code(500);
+                console.error("Error in admin index:", error);
+                return h.response("Internal Server Error").code(500);
             }
         }
     },
@@ -22,10 +24,10 @@ export const adminController = {
             try {
                 const userEmail = request.params.email;
                 await adminModel.deleteUser(userEmail);
-                return h.redirect('/admin');
+                return h.redirect("/admin");
             } catch (error) {
-                console.error('Error in delete user:', error);
-                return h.response('Internal Server Error').code(500);
+                console.error("Error in delete user:", error);
+                return h.response("Internal Server Error").code(500);
             }
         }
     },
@@ -45,6 +47,14 @@ export const adminController = {
             }
         }
     },
+    adminPanel: {
+        handler: function (request, h) {
+          return h.view("admin-panel-view", {
+            title: "Admin Panel",
+            isAdmin: request.auth.credentials.role === "admin"
+          });
+        }
+      },
 
     updateUser: {
         handler: async function(request, h) {

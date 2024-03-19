@@ -3,7 +3,7 @@ import { getDatabase, ref, get, remove } from "firebase/database";
 export const adminModel = {
     async getAllUsers() {
         const db = getDatabase();
-        const usersRef = ref(db, 'users/');
+        const usersRef = ref(db, "users/");
         const snapshot = await get(usersRef);
         if (snapshot.exists()) {
             return snapshot.val();

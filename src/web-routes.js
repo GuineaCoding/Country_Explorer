@@ -28,11 +28,12 @@ export const webRoutes = [
   { method: "POST", path: "/landmarkCategory/{categoryId}/updateLandmark/{landmarkId}", config: landmarkCategoryController.updateLandmark},
   { method: "GET", path: "/profile", config: editAccountController.showEditProfile },
   { method: "POST", path: "/profile/update", config: editAccountController.updateProfile },  
-  { method: "GET", path: "/admin", config: adminController.index },
+  { method: "GET", path: "/view-user-accounts", config: adminController.index },
   { method: "GET", path: "/admin/deleteUser/{email}", config: adminController.deleteUser },
   { method: "GET",  path: "/admin/editUser/{email}", config: adminController.showEditUser },
   { method: "POST", path: "/admin/updateUser", config: adminController.updateUser },
   { method: ["GET", "POST"],  path: "/{any*}", handler: function (request, h) { return h.view("not-found-view", { title: "Not Found" }).code(404);
     }
   },
+  { method: "GET", path: "/admin-panel", config: adminController.adminPanel },
 ];

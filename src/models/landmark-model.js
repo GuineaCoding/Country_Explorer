@@ -58,7 +58,7 @@ async updateLandmark(userEmail, categoryId, landmarkId, updatedData) {
     const plainUpdatedData = JSON.parse(JSON.stringify(updatedData));
     await set(landmarkRef, plainUpdatedData);
   } catch (error) {
-    console.error('Error updating landmark:', error);
+    console.error("Error updating landmark:", error);
     throw error;  
   }
 },

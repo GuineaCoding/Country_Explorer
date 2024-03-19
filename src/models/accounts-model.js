@@ -39,8 +39,8 @@ export const accountsModel = {
     const userRef = ref(firebaseDB, `users/${originalSanitizedEmail}`);
     const snapshot = await get(userRef);
     if (!snapshot.exists()) {
-      console.error('User not found for original email:', originalSanitizedEmail);
-      throw new Error('User not found');
+      console.error("User not found for original email:", originalSanitizedEmail);
+      throw new Error("User not found");
     }
   
     if (updatedData.email && updatedData.email !== originalEmail) {
