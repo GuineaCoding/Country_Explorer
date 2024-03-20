@@ -1,4 +1,5 @@
-{{> menu active="dashboard"}}
+{{> menu}}
+
 <form class="box" action="/landmarkCategory/{{landmarkCategory._id}}/updateLandmark/{{landmark._id}}" method="POST">
   <h1 class="title">Edit Landmark</h1>
 
@@ -36,4 +37,9 @@
   <div class="control">
     <button class="button is-primary" type="submit">Update Landmark</button>
   </div>
+</form>
+<form action="/landmarkCategory/{{landmarkCategory._id}}/landmark/{{landmark._id}}/file"
+    enctype="multipart/form-data" method="POST">
+  <input type="file" name="file">
+  <input type="submit">
 </form>

@@ -1,6 +1,6 @@
 // landmark-model.js
-import { getDatabase, ref, get, push, remove, set } from "firebase/database";
-import { getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
+import { getDatabase, ref, get, push, remove, set, update } from "firebase/database";
+import { getStorage, ref as refStorage, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export const landmarkModel = {
   async getLandmarkCategory(userEmail, categoryId) {
@@ -63,15 +63,28 @@ async updateLandmark(userEmail, categoryId, landmarkId, updatedData) {
   }
 },
 
-  async uploadFile(landmarkId, file) {
-    const storage = getStorage();
-    const storageRef = refStorage(storage, landmarkId);
+async uploadFile(categoryId, landmarkId, file, userEmail) {
+  const storage = getStorage();
+  const storageRef = refStorage(storage, `landmarks/${categoryId}/${landmarkId}`);
 
-    const metadata = {
-      contentType: 'image/png',
-    };
-    
-    await uploadBytes(storageRef, file, metadata)
-  },
+  const metadata = {
+    contentType: 'image/png',
+  };
+  
+  await uploadBytes(storageRef, file, metadata);
 
+  // Get download URL
+  const downloadURL = await getDownloadURL(storageRef);
+
+  // Update landmark with file URL
+  await this.updateLandmarkWithFileURL(userEmail, categoryId, landmarkId, downloadURL);
+
+  return downloadURL;
+},
+async updateLandmarkWithFileURL(userEmail, categoryId, landmarkId, fileURL) {
+  const firebaseDB = getDatabase();
+  const landmarkRef = ref(firebaseDB, `users/${userEmail}/landmarkCategories/${categoryId}/landmarks/${landmarkId}`);
+
+  await update(landmarkRef, { fileURL });
+}
 };

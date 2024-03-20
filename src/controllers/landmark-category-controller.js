@@ -86,8 +86,7 @@ export const landmarkCategoryController = {
         return h.response("An internal server error occurred").code(500);
       }
     }
-  }
-  ,
+  },
 
   updateLandmark: {
     handler: async function(request, h) {
@@ -115,20 +114,29 @@ export const landmarkCategoryController = {
 
   uploadFile: {
     handler: async function (request, h) {
-      const payload = request.payload
-      const landmarkId = request.params.id
-      console.log("paylaod", payload)
-      console.log("id: ", landmarkId)
+      const categoryId = request.params.categoryId;
+      const landmarkId = request.params.landmarkId;
+      const userEmail = request.auth.credentials.email.replace(/\./g, ',');
+      const payload = request.payload;
+  
+      console.log("Payload:", payload);
+      console.log("Category ID:", categoryId, "Landmark ID:", landmarkId);
+  
       try {
-        const resp = await landmarkModel.uploadFile(landmarkId, payload.file)
-
-        console.log("upload response", resp)
-
+        // Upload the file and get the URL
+        const fileURL = await landmarkModel.uploadFile(categoryId, landmarkId, payload.file);
+        console.log("File uploaded, URL:", fileURL);
+  
+        // Update the landmark with the file URL
+        await landmarkModel.updateLandmarkWithFileURL(userEmail, categoryId, landmarkId, fileURL);
+        console.log("Landmark updated with file URL");
+  
+        // Redirect to the edit page
+        return h.redirect(`/landmarkCategory/${categoryId}/editLandmark/${landmarkId}`);
       } catch (error) {
-        console.error("could not upload file", error)
+        console.error("Could not upload file", error);
+        return h.response({ error: "File upload failed" }).code(500);
       }
-
-      return "received"
     },
     payload: {
       output: "data",
@@ -136,5 +144,8 @@ export const landmarkCategoryController = {
       allow: "multipart/form-data",
       multipart: true
     }
-  },
+  }
+  
+  
+  
 };
