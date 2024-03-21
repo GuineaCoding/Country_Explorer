@@ -54,6 +54,9 @@ async function init() {
   server.route({
     method: 'GET',
     path: '/public/{param*}',
+    config: {
+      auth: false,
+    },
     handler: {
         directory: {
             path: path.join(__dirname, "public"),
