@@ -9,7 +9,7 @@ export const accountsModel = {
     const firebaseDB = getDatabase();
     const modifiedUser = {
       ...user,
-      role: 'user'
+      role: "user"
     };
     const usersRef = ref(firebaseDB, `users/${user.email.replace(/\./g, ",")}`);
     await set(usersRef, modifiedUser);
