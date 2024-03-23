@@ -1,10 +1,26 @@
+
+
 {{> menu}}
 
-<form class="box" action="/landmarkCategory/{{landmarkCategory._id}}/updateLandmark/{{landmark._id}}" method="POST">
-  <h1 class="title">Edit Landmark</h1>
+<div class="box transparent-box">
+  <form action="/landmarkCategory/{{landmarkCategory._id}}/landmark/{{landmark._id}}/file" enctype="multipart/form-data" method="POST">
+    <div class="field">
+      <h1 class="title">Add Photo for the Landmark</h1>
+      <div class="control">
+        <input type="file" name="file">
+      </div>
+    </div>
+    <div class="control">
+      <input type="submit" class="button is-primary" value="Upload Photo">
+    </div>
+  </form>
+</div>
 
+<form class="box transparent-box" action="/landmarkCategory/{{landmarkCategory._id}}/updateLandmark/{{landmark._id}}" method="POST">
+  <h1 class="title">Edit Landmark</h1>
+  
   <p>Landmark Category ID: {{landmarkCategory._id}}</p>
-<p>Landmark ID: {{landmark._id}}</p>
+  <p>Landmark ID: {{landmark._id}}</p>
 
   <div class="field">
     <label class="label">Landmark Title</label>
@@ -37,11 +53,6 @@
   <div class="control">
     <button class="button is-primary" type="submit">Update Landmark</button>
   </div>
-</form>
-<form action="/landmarkCategory/{{landmarkCategory._id}}/landmark/{{landmark._id}}/file"
-    enctype="multipart/form-data" method="POST">
-  <input type="file" name="file">
-  <input type="submit">
 </form>
 
 {{> footer}}

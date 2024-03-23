@@ -1,10 +1,10 @@
 {{> menu}}
-<form class="box" action="/profile/update" method="POST">
+<form class="box transparent-box" action="/profile/update" method="POST">
   <h1 class="title">Edit Profile</h1>
   <div class="field">
     <label class="label">Email</label>
-    <input type="hidden" name="originalEmail" value="{{user.email}}">
-    <input class="input" type="email" name="email" value="{{user.email}}" required>
+    <input type="hidden" name="originalEmail" value="{{user.email}}" disabled>
+    <input class="input" type="email" name="email" value="{{user.email}}" required disabled>
   </div>
     <div class="field">
     <label class="label">First Name</label>
@@ -22,3 +22,4 @@
     <button class="button is-primary" type="submit">Update Profile</button>
   </div>
 </form>
+{{>footer}}
