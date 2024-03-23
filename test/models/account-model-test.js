@@ -17,8 +17,12 @@ describe("Accounts Model Tests", () => {
 
   // Updated user data
   const updatedUser = {
-    email: "updateduser@example.com",
-    name: "Updated Test User"
+    email: "testuser@example.com",
+    name: "Test User",
+    role: "user",
+    firstName: "test user",
+    lastName: "test user",
+    password: "2",
   };
 
   // Test case: createUser

@@ -4,13 +4,13 @@ import { adminModel } from "../../src/models/admin-model.js";
 
 describe("Admin Model Tests", () => {
     const testUser = {
-        email: "11@gmail,com", 
+        email: "testuser@example.com",
         name: "Test User",
         role: "user",
         firstName: "test user",
         lastName: "test user",
         password: "2",
-    };
+      };
 
     // Test case: getAllUsers
     describe("getAllUsers", () => {

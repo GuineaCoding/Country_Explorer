@@ -7,9 +7,7 @@ export const adminModel = {
         const snapshot = await get(usersRef);
         if (snapshot.exists()) {
             return snapshot.val();
-        } else {
-            return {};
-        }
+        } 
     },
 
     async deleteUser(email) {
