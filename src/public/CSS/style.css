@@ -115,17 +115,45 @@
   }
 
   .has-text-white {
-    color: #FFFFFF; /* White text color */
+    color: #FFFFFF; 
   }
 
-  .gradient-bg {
-    background: linear-gradient(to right, #2C7873, #27AE60); /* Dark teal to green gradient */
+ body {
+    background: linear-gradient(to right, #2C7873, #27AE60); 
   }
   
   .has-text-white {
-    color: #FFFFFF; /* White text color */
+    color: #FFFFFF; 
   }
   
   .box-link-hover-shadow:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .transparent-table {
+    background-color: transparent;
+    color: #FFFFFF;
+  }
+  
+  .transparent-table th,
+  .transparent-table td {
+    color: inherit; 
+  }
+
+
+.transparent-box {
+    background-color: transparent;
+  }
+  
+  .transparent-table {
+    background-color: transparent;
+    color: #FFFFFF; 
+  }
+  
+  .transparent-table th,
+  .transparent-table td {
+    color: inherit; 
+  }
+  .transparent-background {
+    background-color: transparent;
   }

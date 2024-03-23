@@ -1,19 +1,20 @@
-<form class="box" action="/landmarkCategory/{{landmarkCategory._id}}/addLandmark" method="POST">
-  <label>Enter Track Details:</label>
+<form class="box transparent-background" action="/landmarkCategory/{{landmarkCategory._id}}/addLandmark" method="POST" onsubmit="return validateForm()">
+  <label class="has-text-white">Enter Landmark Details:</label>
   <div class="field is-horizontal">
     <div class="field-body">
       <div class="field">
-        <input class="input" type="text" placeholder="Enter Landmark Title" name="landmarkTitle">
+        <input class="input" type="text" placeholder="Enter Landmark Title" name="landmarkTitle" required>
       </div>
       <div class="field">
         <input class="input" type="text" placeholder="Enter Description" name="description">
       </div>
-      <div class="field">
-        <input class="input" type="text" placeholder="Enter Latitude" name="latitude">
-      </div>
-      <div class="field">
-        <input class="input" type="text" placeholder="Enter Longitude" name="longitude">
-      </div>
+<div class="field">
+  <input class="input" type="number" placeholder="Enter Latitude" name="latitude" required min="-90" max="90">
+</div>
+<div class="field">
+  <input class="input" type="number" placeholder="Enter Longitude" name="longitude" required min="-180" max="180">
+</div>
+
     </div>
   </div>
   <button class="button is-primary">Add Track</button>

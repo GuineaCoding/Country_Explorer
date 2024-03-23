@@ -1,7 +1,8 @@
 {{#each landmarkCategories}}
-<div class=" box-link-hover-shadow gradient-bg">
+<section class="section gradient-bg">
+<div class="box box-link-hover-shadow gradient-bg">
   <h2 class="title has-text-white">
-    {{title}}
+    Landmark Category Name: {{title}}
   </h2>
   <a href="/landmarkCategory/{{_id}}" class="button is-dark">
     <span class="icon is-small">
@@ -12,5 +13,5 @@
     <i class="fas fa-trash"></i>
   </a>
 </div>
-
+</section>
 {{/each}}

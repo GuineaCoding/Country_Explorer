@@ -11,32 +11,15 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a id="dashboard" class="button" href="/dashboard">Dashboard</a>
-          <a id="about" class="button" href="/about">About</a>
-          <a id="logout" class="button" href="/logout">Logout</a>
-          <a id="edit-profile" class="button" href="/profile">Edit Profile</a>
+          <a id="dashboard" class="button is-dark" href="/dashboard">Dashboard</a>
+          <a id="about" class="button is-dark" href="/about">About</a>
+          <a id="logout" class="button is-dark" href="/logout">Logout</a>
+          <a id="edit-profile" class="button is-dark" href="/profile">Edit Profile</a>
           {{#if isAdmin}}
-          <a id="admin-panel" class="button" href="/admin-panel">Admin Panel</a>
+          <a id="admin-panel" class="button is-dark" href="/admin-panel">Admin Panel</a>
           {{/if}}
         </div>
       </div>
     </div>
   </div>
 </nav>
-
-<script>
-  document.getElementById("{{active}}").classList.add("is-primary");
-  document.addEventListener("DOMContentLoaded", () => {
-    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll(".navbar-burger"), 0);
-    if ($navbarBurgers.length > 0) {
-      $navbarBurgers.forEach(el => {
-        el.addEventListener("click", () => {
-          const target = el.dataset.target;
-          const $target = document.getElementById(target);
-          el.classList.toggle("is-active");
-          $target.classList.toggle("is-active");
-        });
-      });
-    }
-  });
-</script>
