@@ -1,0 +1,131 @@
+.footer {
+    background-color: #2C7873;
+    color: #FFFFFF;
+  }
+  
+  .column h4.title.is-4 {
+    color: #27AE60;
+  }
+  
+  .social-icons .icon {
+    color: #27AE60;
+  }
+
+  .navbar {
+    background-color: #2C7873; 
+  }
+  
+  .navbar-item a.button {
+    color: #FFFFFF; 
+  }
+  
+  /* Log in button */
+  .button#login {
+    background-color: #27AE60; 
+  }
+  
+  /* Sign up button */
+  .button#signup {
+    background-color: #008080; 
+  }
+  
+  /* Hover effect */
+  .button:hover {
+    opacity: 0.8;
+  }
+  
+  .section:nth-child(odd) {
+    background-color: #F0FFFF; 
+  }
+  
+  /* Discover section */
+  .section:nth-child(even) {
+    background-color: #E0FFFF; 
+  }
+  
+  /* Testimonial blockquote */
+  .testimonial blockquote {
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  /* Testimonial cite */
+  .testimonial cite {
+    font-weight: bold;
+  }
+
+  .gradient-bg {
+    animation: changeGradient 10s infinite alternate;
+    background: linear-gradient(to right, #2C7873, #27AE60, #008080); 
+    background-size: 400% 400%; 
+  }
+  
+  @keyframes changeGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .gradient-bg {
+    animation: changeGradient 10s infinite alternate;
+    background-size: 400% 400%;
+  }
+  
+  @keyframes changeGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  /* Testimonial section */
+  .testimonial-section {
+    color: #FFFFFF; 
+  }
+  
+  /* Discover section */
+  .discover-section {
+    color: #FFFFFF; 
+  }
+
+  .testimonial-section blockquote {
+    color: #1b7d46; 
+  }
+
+  .button.is-dark {
+    background-color: #73d9d2; 
+    color: #FFFFFF; 
+  }
+
+  .button.is-dark:hover{
+    background-color: #5feee5;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(to right, #2C7873, #27AE60); 
+  }
+
+  .title.is-white {
+    color: #FFFFFF; 
+  }
+
+  .has-text-white {
+    color: #FFFFFF; /* White text color */
+  }
+
+  .gradient-bg {
+    background: linear-gradient(to right, #2C7873, #27AE60); /* Dark teal to green gradient */
+  }
+  
+  .has-text-white {
+    color: #FFFFFF; /* White text color */
+  }
+  
+  .box-link-hover-shadow:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
