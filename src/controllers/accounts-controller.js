@@ -38,6 +38,16 @@ export const accountsController = {
     handler: async function (request, h) {
       try {
         const user = request.payload;
+  
+        // Check if email already exists
+        const existingUser = await accountsModel.getUserByEmail(user.email);
+        if (existingUser) {
+          // User already exists with this email, handle accordingly
+          // For example, display an error message or redirect
+          return h.view("signup-view", { title: "Sign up", error: "Email already in use" }).code(400);
+        }
+  
+        // If email doesn't exist, create a new user
         await accountsModel.createUser(user);
         return h.redirect("/login");
       } catch (error) {
@@ -50,8 +60,8 @@ export const accountsController = {
   // Handler for rendering the login page
   showLogin: {
     auth: {
-      mode: 'try',
-      strategy: 'session'
+      mode: "try",
+      strategy: "session"
     },
     handler: function (request, h) {
       if (request.auth.isAuthenticated) {
