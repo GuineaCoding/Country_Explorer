@@ -28,7 +28,7 @@ export const adminModel = {
     async getAllUserAnalytics() {
         const firebaseDB = getDatabase();
         // Reference to the users collection in the database
-        const usersRef = ref(firebaseDB, `users/`);
+        const usersRef = ref(firebaseDB, "users/");
         const snapshot = await get(usersRef);
       
         let analyticsData = {};
