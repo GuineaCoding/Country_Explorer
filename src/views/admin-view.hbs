@@ -3,7 +3,7 @@
 <section class="transparent-background hero is-fullheight ">
     <div class="container">
         <h1 class="title has-text-white has-text-centered m-6">Admin Dashboard</h1>
-        
+
         <table class="table is-fullwidth transparent-background">
             <thead>
                 <tr>
@@ -14,6 +14,7 @@
             </thead>
             <tbody>
                 {{#each users}}
+                {{#if (neq this.email loggedInEmail)}}
                 <tr>
                     <td>{{this.email}}</td>
                     <td>{{this.role}}</td>
@@ -28,6 +29,7 @@
                         </a>
                     </td>
                 </tr>
+                {{/if}}
                 {{/each}}
             </tbody>
         </table>

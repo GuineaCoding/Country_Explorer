@@ -81,10 +81,17 @@ async function init() {
   await server.start();
   console.log("Server running on %s", server.info.uri);
 }
+Handlebars.registerHelper('eq', function(arg1, arg2, options) {
+  return arg1 === arg2;
+});
 
 process.on("unhandledRejection", (err) => {
   console.log(err);
   process.exit(1);
+});
+
+Handlebars.registerHelper('neq', function(arg1, arg2, options) {
+  return arg1 !== arg2;
 });
 
 init();

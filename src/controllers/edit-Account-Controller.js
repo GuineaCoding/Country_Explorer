@@ -47,7 +47,6 @@ export const editAccountController = {
         // If the user's email has changed, update the session cookie with the new email
         if (updatedUserData.email && originalEmail !== updatedUserData.email) {
           request.cookieAuth.set({ id: request.auth.credentials.id, email: updatedUserData.email });
-          console.log("Session email updated to:", updatedUserData.email);
         }
 
         // Update user data in the database

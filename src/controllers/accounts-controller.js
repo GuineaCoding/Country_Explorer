@@ -119,7 +119,6 @@ signup: {
 
   // Function to validate user session
   validate: async function (request, session) {
-    console.log("Session object in validate function:", session);
 
     if (!session || !session.email) {
       console.error("Session email is undefined.");
@@ -128,7 +127,6 @@ signup: {
 
     try {
       const user = await accountsModel.getUserByEmail(session.email);
-      console.log("User found in validate function:", user);
 
       if (user) {
         return { isValid: true, credentials: user };

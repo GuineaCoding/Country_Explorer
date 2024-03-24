@@ -1,38 +1,49 @@
-
-
 {{> menu}}
 
 <div class="box transparent-box">
-  <form action="/landmarkCategory/{{landmarkCategory._id}}/landmark/{{landmark._id}}/file" enctype="multipart/form-data" method="POST">
+  <form action="/landmarkCategory/{{landmarkCategory._id}}/landmark/{{landmark._id}}/file" enctype="multipart/form-data"
+    method="POST">
     <div class="field">
-      <h1 class="title">Add Photo for the Landmark</h1>
-      <div class="control">
-        <input type="file" name="file">
-      </div>
+      <h1 class="title">Add Photo or Edit for the Landmark</h1>
+
+      <label class="file-label">
+        <input class="file-input" type="file" name="file" required>
+        <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label"> Choose a file… </span>
+        </span>
+      </label>
+
     </div>
     <div class="control">
-      <input type="submit" class="button is-primary" value="Upload Photo">
+      <input type="submit" class="button is-primary" value="Upload Or Edit Photo">
     </div>
   </form>
 </div>
 
-<form class="box transparent-box" action="/landmarkCategory/{{landmarkCategory._id}}/updateLandmark/{{landmark._id}}" method="POST">
+
+<form class="box transparent-box" action="/landmarkCategory/{{landmarkCategory._id}}/updateLandmark/{{landmark._id}}"
+  method="POST">
   <h1 class="title">Edit Landmark</h1>
-  
+
   <p>Landmark Category ID: {{landmarkCategory._id}}</p>
   <p>Landmark ID: {{landmark._id}}</p>
 
   <div class="field">
     <label class="label">Landmark Title</label>
     <div class="control">
-      <input class="input" type="text" placeholder="Enter Landmark Title" name="landmarkTitle" value="{{landmark.landmarkTitle}}">
+      <input class="input" type="text" placeholder="Enter Landmark Title" name="landmarkTitle"
+        value="{{landmark.landmarkTitle}}">
     </div>
   </div>
 
   <div class="field">
     <label class="label">Description</label>
     <div class="control">
-      <input class="input" type="text" placeholder="Enter Description" name="description" value="{{landmark.description}}">
+      <input class="input" type="text" placeholder="Enter Description" name="description"
+        value="{{landmark.description}}">
     </div>
   </div>
 
@@ -49,7 +60,17 @@
       <input class="input" type="text" placeholder="Enter Longitude" name="longitude" value="{{landmark.longitude}}">
     </div>
   </div>
-
+  {{#if landmark.fileURL}}
+  <div class="field">
+    <label class="label">Image URL</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Enter URL" name="fileURL" value="{{landmark.fileURL}}">
+    </div>
+  </div>
+  <div class="field">
+    <img src="{{landmark.fileURL}}">
+  </div>
+  {{/if}}
   <div class="control">
     <button class="button is-primary" type="submit">Update Landmark</button>
   </div>

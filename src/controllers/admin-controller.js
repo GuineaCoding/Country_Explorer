@@ -7,11 +7,17 @@ export const adminController = {
     index: {
         handler: async function(request, h) {
             try {
-                const users = await adminModel.getAllUsers();
+                const usersObject = await adminModel.getAllUsers();
+                const usersArray = Object.values(usersObject); 
                 const isAdmin = request.auth.credentials && request.auth.credentials.role === "admin";
+                const loggedInEmail = request.auth.credentials ? request.auth.credentials.email : null;
+      
+                // Filter out the logged-in user's email
+                const filteredUsers = usersArray.filter(user => user.email !== loggedInEmail);
+      
                 return h.view("admin-view", {
                     title: "Admin Dashboard",
-                    users: users,
+                    users: filteredUsers, 
                     isAdmin: isAdmin
                 });
             } catch (error) {
@@ -19,8 +25,8 @@ export const adminController = {
                 return h.response("Internal Server Error").code(500);
             }
         }
-    },
-
+      },
+      
     // Handler for deleting a user
     deleteUser: {
         handler: async function(request, h) {
@@ -74,8 +80,6 @@ export const adminController = {
                 role: request.payload.role
             };
 
-            console.log(`Updating user with original email: ${originalEmail}`);
-
             try {
                 await accountsModel.updateUser(originalEmail, updatedData);
                 return h.redirect("/view-user-accounts");
@@ -92,8 +96,8 @@ export const adminController = {
             try {
                 const allUserAnalytics = await adminModel.getAllUserAnalytics();
 
-                return h.view('view-user-statistics', {
-                    title: 'User Statistics',
+                return h.view("view-user-statistics", {
+                    title: "User Statistics",
                     analytics: allUserAnalytics
                 });
             } catch (error) {
