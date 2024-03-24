@@ -14,8 +14,8 @@ export const accountsController = {
   // Handler for rendering the signup page
   showSignup: {
     auth: {
-      mode: 'try',
-      strategy: 'session'
+      mode: "try",
+      strategy: "session"
     },
     handler: function (request, h) {
       if (request.auth.isAuthenticated) {
