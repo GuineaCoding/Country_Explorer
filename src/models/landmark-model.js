@@ -77,7 +77,7 @@ export const landmarkModel = {
     const storageRef = refStorage(storage, `landmarks/${categoryId}/${landmarkId}`);
 
     const metadata = {
-      contentType: 'image/png',
+      contentType: "image/png",
     };
     
     await uploadBytes(storageRef, file, metadata);
