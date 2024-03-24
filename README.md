@@ -37,7 +37,7 @@ Country Explorer is a web application designed to allow users to explore and int
 - User Profile Editing: Users can update their profile information.
 
 ## Usage
-After installation, navigate to the application URL (typically `http://localhost:3000`) and follow the intuitive user interface to interact with landmarks or manage user accounts (if logged in as an admin).
+After installation, navigate to the application URL (typically `http://localhost:3000`) and follow the intuitive user interface to interact with landmarks and manage user accounts (if logged in as an admin).
 
 ## Contributing
 Contributions to Country Explorer are welcome. Please ensure that your code adheres to the existing style and that all tests pass before submitting a pull request.
