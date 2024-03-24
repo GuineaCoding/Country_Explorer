@@ -146,7 +146,7 @@ export const landmarkCategoryController = {
       // Extract category ID, landmark ID, and user email from request
       const categoryId = request.params.categoryId;
       const landmarkId = request.params.landmarkId;
-      const userEmail = request.auth.credentials.email.replace(/\./g, ',');
+      const userEmail = request.auth.credentials.email.replace(/\./g, ",");
       const payload = request.payload;
       // Log payload information
       console.log("Payload:", payload);
@@ -157,7 +157,7 @@ export const landmarkCategoryController = {
         console.log("File uploaded, URL:", fileURL);
         // Update the landmark with the file URL
         await landmarkModel.updateLandmarkWithFileURL(userEmail, categoryId, landmarkId, fileURL);
-        console.log("Landmark updated with file URL");
+      
         // Redirect to the edit page
         return h.redirect(`/landmarkCategory/${categoryId}/editLandmark/${landmarkId}`);
       } catch (error) {

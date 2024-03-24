@@ -5,19 +5,19 @@ import { accountsModel } from "../models/accounts-model.js";
 export const adminController = {
     // Handler for rendering the admin dashboard
     index: {
-        handler: async function(request, h) {
+        handler: async function (request, h) {
             try {
                 const usersObject = await adminModel.getAllUsers();
-                const usersArray = Object.values(usersObject); 
+                const usersArray = Object.values(usersObject); // Convert users object to an array
                 const isAdmin = request.auth.credentials && request.auth.credentials.role === "admin";
                 const loggedInEmail = request.auth.credentials ? request.auth.credentials.email : null;
-      
+
                 // Filter out the logged-in user's email
                 const filteredUsers = usersArray.filter(user => user.email !== loggedInEmail);
-      
+
                 return h.view("admin-view", {
                     title: "Admin Dashboard",
-                    users: filteredUsers, 
+                    users: filteredUsers, // Use the filtered array
                     isAdmin: isAdmin
                 });
             } catch (error) {
@@ -25,11 +25,11 @@ export const adminController = {
                 return h.response("Internal Server Error").code(500);
             }
         }
-      },
-      
+    },
+
     // Handler for deleting a user
     deleteUser: {
-        handler: async function(request, h) {
+        handler: async function (request, h) {
             try {
                 const userEmail = request.params.email;
                 await adminModel.deleteUser(userEmail);
@@ -43,7 +43,7 @@ export const adminController = {
 
     // Handler for rendering the edit user page
     showEditUser: {
-        handler: async function(request, h) {
+        handler: async function (request, h) {
             const userEmail = request.params.email;
             try {
                 const user = await accountsModel.getUserByEmail(userEmail);
@@ -70,8 +70,8 @@ export const adminController = {
 
     // Handler for updating user information
     updateUser: {
-        handler: async function(request, h) {
-            const originalEmail = request.payload.originalEmail; 
+        handler: async function (request, h) {
+            const originalEmail = request.payload.originalEmail;
             const updatedData = {
                 email: request.payload.email,
                 firstName: request.payload.firstName,
