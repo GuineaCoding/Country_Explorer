@@ -26,36 +26,36 @@ export const accountsController = {
   },
 
   // Handler for processing user signup
-  signup: {
-    auth: false,
-    validate: {
-      payload: UserSpec,
-      options: { abortEarly: false },
-      failAction: function (request, h, error) {
-        return h.view("signup-view", { title: "Sign up error", errors: error.details }).takeover().code(400);
-      },
-    },
-    handler: async function (request, h) {
-      try {
-        const user = request.payload;
-  
-        // Check if email already exists
-        const existingUser = await accountsModel.getUserByEmail(user.email);
-        if (existingUser) {
-          // User already exists with this email, handle accordingly
-          // For example, display an error message or redirect
-          return h.view("signup-view", { title: "Sign up", error: "Email already in use" }).code(400);
-        }
-  
-        // If email doesn't exist, create a new user
-        await accountsModel.createUser(user);
-        return h.redirect("/login");
-      } catch (error) {
-        console.error("Error in signup:", error);
-        return h.response("An internal server error occurred").code(500);
-      }
+signup: {
+  auth: false,
+  validate: {
+    payload: UserSpec,
+    options: { abortEarly: false },
+    failAction: function (request, h, error) {
+      return h.view("signup-view", { title: "Sign up error", errors: error.details }).takeover().code(400);
     },
   },
+  handler: async function (request, h) {
+    try {
+      const user = request.payload;
+
+      // Check if email already exists
+      const existingUser = await accountsModel.getUserByEmail(user.email);
+      if (existingUser) {
+        // User already exists with this email, display error message
+        const error = "Email already in use";
+        return h.view("signup-view", { title: "Sign up", error, user }).code(400);
+      }
+
+      // If email doesn't exist, create a new user
+      await accountsModel.createUser(user);
+      return h.redirect("/login");
+    } catch (error) {
+      console.error("Error in signup:", error);
+      return h.response("An internal server error occurred").code(500);
+    }
+  },
+},
 
   // Handler for rendering the login page
   showLogin: {
@@ -85,29 +85,30 @@ export const accountsController = {
       const { email, password } = request.payload;
       try {
         const user = await accountsModel.getUserByEmail(email);
-        if (user && user.password === password) {
-          request.cookieAuth.set({ id: user._id, email: user.email });
-
-          const analyticsData = {
-            date: new Date().toISOString().replace("T", " ").replace(/\..+/, ""),
-            deviceInfo: request.headers["user-agent"],
-            ip: request.headers["x-forwarded-for"] || request.info.remoteAddress,
-          };
-          
-          // Update user analytics data
-          await accountsModel.updateUserAnalytics(user.email, analyticsData);
-
-          return h.redirect("/dashboard");
-        } else {
-          return h.redirect("/");
+        if (!user || user.password !== password) {
+          // Wrong email or password, display error
+          return h.view("login-view", { title: "Log in", error: "Invalid email or password" }).code(400);
         }
+        
+        // User authentication successful
+        request.cookieAuth.set({ id: user._id, email: user.email });
+  
+        // Update user analytics data
+        const analyticsData = {
+          date: new Date().toISOString().split("T")[0],
+          deviceInfo: request.headers["user-agent"],
+          ip: request.headers["x-forwarded-for"] || request.info.remoteAddress,
+        };
+        await accountsModel.updateUserAnalytics(user.email, analyticsData);
+  
+        return h.redirect("/dashboard");
       } catch (error) {
         console.error("Error during login:", error);
         return h.response("An internal server error occurred").code(500);
       }
     },
   },
-
+  
   // Handler for user logout
   logout: {
     handler: function (request, h) {

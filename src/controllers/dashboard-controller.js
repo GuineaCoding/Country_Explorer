@@ -45,8 +45,16 @@ export const dashboardController = {
       const newLandmarkCategory = {
         title: request.payload.title,
       };
-
+  
       try {
+        // Check if category title already exists
+        const categories = await dashboardModel.getUserLandmarkCategories(userEmail);
+        const titleExists = categories.some(category => category.title === newLandmarkCategory.title);
+        if (titleExists) {
+          const error = "Landmark category title already in use";
+          return h.view("dashboard-view", { title: "Add Landmark", error }).code(400);
+        }
+  
         // Add the new landmark category
         await dashboardModel.addLandmarkCategory(userEmail, newLandmarkCategory);
         // Redirect to dashboard after successful addition
@@ -58,6 +66,7 @@ export const dashboardController = {
       }
     },
   },
+  
 
   // Handler for deleting a landmark category
   deleteLandmarkCategory: {

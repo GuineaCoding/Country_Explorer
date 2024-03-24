@@ -6,36 +6,42 @@
         <th class="has-text-white">Description</th>
         <th class="has-text-white">Latitude</th>
         <th class="has-text-white">Longitude</th>
+        <th class="has-text-white">Add Photo</th>
         <th class="has-text-white">Edit</th>
         <th class="has-text-white">Delete</th>
       </tr>
     </thead>
     <tbody>
       {{#each landmarkCategory.landmarks}}
-        <tr>
-          <td>
-            {{landmarkTitle}}
-          </td>
-          <td>
-            {{description}}
-          </td>
-          <td>
-            {{latitude}}
-          </td>
-          <td>
-            {{longitude}}
-          </td>
-          <td>
-            <a href="/landmarkCategory/{{../landmarkCategory._id}}/editLandmark/{{_id}}" class="ui icon button">
-              <i class="fas fa-edit"></i>
-            </a>
-          </td>
-          <td>
-            <a href="/landmarkCategory/{{../landmarkCategory._id}}/deleteLandmark/{{_id}}" class="ui icon button">
-              <i class="fas fa-trash"></i>
-            </a>
-          </td>
-        </tr>
+      <tr>
+        <td>
+          {{landmarkTitle}}
+        </td>
+        <td>
+          {{description}}
+        </td>
+        <td>
+          {{latitude}}
+        </td>
+        <td>
+          {{longitude}}
+        </td>
+        <td>
+          <a href="/landmarkCategory/{{../landmarkCategory._id}}/editLandmark/{{_id}}" class="ui icon button">
+            <i class="fas fa-edit"></i>
+          </a>
+        </td>
+        <td>
+          <a href="/landmarkCategory/{{../landmarkCategory._id}}/editLandmark/{{_id}}" class="ui icon button">
+            <i class="fas fa-edit"></i>
+          </a>
+        </td>
+        <td>
+          <a href="/landmarkCategory/{{../landmarkCategory._id}}/deleteLandmark/{{_id}}" class="ui icon button">
+            <i class="fas fa-trash"></i>
+          </a>
+        </td>
+      </tr>
       {{/each}}
     </tbody>
   </table>

@@ -15,8 +15,8 @@
     <input class="input" type="lastName" name="lastName" value="{{user.lastName}}" required>
   </div>
   <div class="field">
-    <label class="label">Password</label>
-    <input class="input" type="password" name="password" value="{{user.password}}" required>
+    <label class="label">Password min 6 characters</label>
+    <input class="input" type="password" name="password" value="{{user.password}}" minlength="6" required >
   </div>
   <div class="field">
     <button class="button is-primary" type="submit">Update Profile</button>

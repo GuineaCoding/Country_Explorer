@@ -2,6 +2,11 @@
   <div class="columns">
     <div class="column is-half">
       <h1 class="title has-text-white">Add Landmark Category</h1>
+                    {{#if error}}
+            <div class="notification is-danger">
+              {{error}}
+            </div>
+          {{/if}}
       <form action="/dashboard/addLandMarkCategory" method="POST">
         <div class="field">
           <label class="label has-text-white">Landmark Category Title</label>

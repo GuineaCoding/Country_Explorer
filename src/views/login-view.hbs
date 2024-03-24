@@ -6,6 +6,11 @@
       <div class="column is-half">
         <div class="content">
           <h1 class="title is-white has-text-centered">Log in</h1>
+                    {{#if error}}
+            <div class="notification is-danger">
+              {{error}}
+            </div>
+          {{/if}}
           <form action="/authenticate" method="POST">
             <div class="field">
               <label class="label has-text-white">Email</label> 
@@ -24,8 +29,5 @@
     </div>
   </div>
 </section>
-
-
-
 
 {{>footer}}
