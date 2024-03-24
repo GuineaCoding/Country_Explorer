@@ -1,7 +1,9 @@
 import { adminModel } from "../models/admin-model.js";
 import { accountsModel } from "../models/accounts-model.js";
 
+// Controller for handling admin-related actions
 export const adminController = {
+    // Handler for rendering the admin dashboard
     index: {
         handler: async function(request, h) {
             try {
@@ -19,6 +21,7 @@ export const adminController = {
         }
     },
 
+    // Handler for deleting a user
     deleteUser: {
         handler: async function(request, h) {
             try {
@@ -32,6 +35,7 @@ export const adminController = {
         }
     },
 
+    // Handler for rendering the edit user page
     showEditUser: {
         handler: async function(request, h) {
             const userEmail = request.params.email;
@@ -47,38 +51,43 @@ export const adminController = {
             }
         }
     },
+
+    // Handler for rendering the admin panel
     adminPanel: {
         handler: function (request, h) {
-          return h.view("admin-panel-view", {
-            title: "Admin Panel",
-            isAdmin: request.auth.credentials.role === "admin"
-          });
+            return h.view("admin-panel-view", {
+                title: "Admin Panel",
+                isAdmin: request.auth.credentials.role === "admin"
+            });
         }
-      },
+    },
 
+    // Handler for updating user information
     updateUser: {
         handler: async function(request, h) {
-          const originalEmail = request.payload.originalEmail; 
-          const updatedData = {
-            email: request.payload.email,
-            firstName: request.payload.firstName,
-            lastName: request.payload.lastName,
-            password: request.payload.password,
-            role: request.payload.role
-          };
-      
-          console.log(`Updating user with original email: ${originalEmail}`);
-      
-          try {
-            await accountsModel.updateUser(originalEmail, updatedData);
-            return h.redirect("/admin");
-          } catch (error) {
-            console.error("Error in updateUser:", error);
-            return h.response("An internal server error occurred").code(500);
-          }
+            const originalEmail = request.payload.originalEmail; 
+            const updatedData = {
+                email: request.payload.email,
+                firstName: request.payload.firstName,
+                lastName: request.payload.lastName,
+                password: request.payload.password,
+                role: request.payload.role
+            };
+
+            console.log(`Updating user with original email: ${originalEmail}`);
+
+            try {
+                await accountsModel.updateUser(originalEmail, updatedData);
+                return h.redirect("/view-user-accounts");
+            } catch (error) {
+                console.error("Error in updateUser:", error);
+                return h.response("An internal server error occurred").code(500);
+            }
         }
-      },
-      viewUserStatistics: {
+    },
+
+    // Handler for viewing user statistics
+    viewUserStatistics: {
         handler: async function (request, h) {
             try {
                 const allUserAnalytics = await adminModel.getAllUserAnalytics();

@@ -1,14 +1,17 @@
 import { UserSpec, UserCredentialsSpec } from "../models/joi-schemas.js";
 import { accountsModel } from "../models/accounts-model.js";
 
-
+// Controller for handling account-related actions
 export const accountsController = {
+  // Handler for rendering the main page
   index: {
     auth: false,
     handler: function (request, h) {
       return h.view("main", { title: "Welcome to Country Explorer" });
     },
   },
+
+  // Handler for rendering the signup page
   showSignup: {
     auth: {
       mode: 'try',
@@ -21,6 +24,8 @@ export const accountsController = {
       return h.view("signup-view", { title: "Sign up for Country Explorer" });
     },
   },
+
+  // Handler for processing user signup
   signup: {
     auth: false,
     validate: {
@@ -41,6 +46,8 @@ export const accountsController = {
       }
     },
   },
+
+  // Handler for rendering the login page
   showLogin: {
     auth: {
       mode: 'try',
@@ -53,6 +60,8 @@ export const accountsController = {
       return h.view("login-view", { title: "Login to Country Explorer" });
     },
   },
+
+  // Handler for processing user login
   login: {
     auth: false,
     validate: {
@@ -75,7 +84,7 @@ export const accountsController = {
             ip: request.headers["x-forwarded-for"] || request.info.remoteAddress,
           };
           
-          
+          // Update user analytics data
           await accountsModel.updateUserAnalytics(user.email, analyticsData);
 
           return h.redirect("/dashboard");
@@ -88,33 +97,36 @@ export const accountsController = {
       }
     },
   },
+
+  // Handler for user logout
   logout: {
     handler: function (request, h) {
       request.cookieAuth.clear();
       return h.redirect("/");
     },
   },
-validate: async function (request, session) {
-  console.log("Session object in validate function:", session);
 
-  if (!session || !session.email) {
-    console.error("Session email is undefined.");
-    return { isValid: false };
-  }
+  // Function to validate user session
+  validate: async function (request, session) {
+    console.log("Session object in validate function:", session);
 
-  try {
-    const user = await accountsModel.getUserByEmail(session.email);
-    console.log("User found in validate function:", user);
-
-    if (user) {
-      return { isValid: true, credentials: user };
-    } else {
+    if (!session || !session.email) {
+      console.error("Session email is undefined.");
       return { isValid: false };
     }
-  } catch (error) {
-    console.error("Error during session validation:", error);
-    return { isValid: false };
+
+    try {
+      const user = await accountsModel.getUserByEmail(session.email);
+      console.log("User found in validate function:", user);
+
+      if (user) {
+        return { isValid: true, credentials: user };
+      } else {
+        return { isValid: false };
+      }
+    } catch (error) {
+      console.error("Error during session validation:", error);
+      return { isValid: false };
+    }
   }
-}
- 
 };

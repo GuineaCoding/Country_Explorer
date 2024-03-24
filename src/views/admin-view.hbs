@@ -1,15 +1,15 @@
 {{> menu}}
 
-<section class="section">
+<section class="transparent-background hero is-fullheight ">
     <div class="container">
-        <h1 class="title">Admin Dashboard</h1>
+        <h1 class="title has-text-white has-text-centered m-6">Admin Dashboard</h1>
         
-        <table class="table is-fullwidth is-striped">
+        <table class="table is-fullwidth transparent-background">
             <thead>
                 <tr>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Actions</th>
+                    <th class="has-text-white">Email</th>
+                    <th class="has-text-white">Role</th>
+                    <th class="has-text-white">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,7 +18,7 @@
                     <td>{{this.email}}</td>
                     <td>{{this.role}}</td>
                     <td>
-                        <a class="button is-info is-small" href="/admin/editUser/{{@key}}">
+                        <a class="button is-success is-small" href="/admin/editUser/{{@key}}">
                             <span class="icon"><i class="fas fa-edit"></i></span>
                             <span>Edit</span>
                         </a>
@@ -33,3 +33,6 @@
         </table>
     </div>
 </section>
+
+
+{{>footer}}

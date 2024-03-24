@@ -1,21 +1,23 @@
 {{> menu}}
 
-<section class="section">
+<section class="transparent-background">
   <div class="container">
-    <h1 class="title">User Statistics</h1>
+    <h1 class="title has-text-white">User Statistics</h1>
 
     {{#each analytics}}
-      <div class="box">
-        <h2 class="subtitle">User: {{@key}}</h2>
-        <p><strong>Login Count:</strong> {{this.loginCount}}</p>
+      <div class="box transparent-background">
+        <h2 class="subtitle has-text-white">User: {{@key}}</h2>
+        <p class="has-text-white"> <strong class="has-text-white">Login Count:</strong> {{this.loginCount}}</p>
         {{#each this.logins}}
           <div class="content">
-            <p><strong>Date:</strong> {{this.date}}</p>
-            <p><strong>Device:</strong> {{this.deviceInfo}}</p>
-            <p><strong>IP:</strong> {{this.ip}}</p>
+            <p class="has-text-white" ><strong class="has-text-white">Date:</strong> {{this.date}}</p>
+            <p class="has-text-white" ><strong class="has-text-white">Device:</strong> {{this.deviceInfo}}</p>
+            <p class="has-text-white"> <strong class="has-text-white">IP:</strong> {{this.ip}}</p>
           </div>
         {{/each}}
       </div>
     {{/each}}
   </div>
 </section>
+
+{{>footer}}

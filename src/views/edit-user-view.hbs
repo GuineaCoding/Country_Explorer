@@ -1,28 +1,29 @@
-<section class="section">
+{{> menu}}
+<section class="transparent-background m-6">
     <div class="container">
-        <h1 class="title">Edit User</h1>
-        <form action="/admin/updateUser" method="POST">
+        <h1 class="title has-text-white">Edit User As Admin</h1>
+        <form id="editUserForm" action="/admin/updateUser" method="POST">
             <!-- Hidden field for original email -->
             <input type="hidden" name="originalEmail" value="{{user.email}}">
 
             <div class="field">
-                <label class="label">Email</label>
-                <input class="input" type="email" name="email" value="{{user.email}}">
+                <label class="label has-text-white">Email</label>
+                <input class="input" type="email" name="email" value="{{user.email}}" required>
             </div>
             <div class="field">
-                <label class="label">First Name</label>
-                <input class="input" type="text" name="firstName" value="{{user.firstName}}">
+                <label class="label has-text-white">First Name</label>
+                <input class="input" type="text" name="firstName" value="{{user.firstName}}" required>
             </div>
             <div class="field">
-                <label class="label">Last Name</label>
-                <input class="input" type="text" name="lastName" value="{{user.lastName}}">
+                <label class="label has-text-white">Last Name</label>
+                <input class="input" type="text" name="lastName" value="{{user.lastName}}" required>
             </div>
             <div class="field">
-                <label class="label">Password</label>
-                <input class="input" type="password" name="password" value="{{user.password}}">
+                <label class="label has-text-white">Password</label>
+                <input class="input" type="password" name="password" value="{{user.password}}" required>
             </div>
             <div class="field">
-                <label class="label">Role</label>
+                <label class="label has-text-white">Role</label>
                 <div class="select">
                     <select name="role">
                         <option value="user" {{#if (equal user.role "user")}}selected{{/if}}>User</option>
@@ -31,8 +32,10 @@
                 </div>
             </div>
             <div class="field">
-                <button class="button is-primary" type="submit">Update</button>
+                <button class="button is-primary m-6" type="submit">Update</button>
             </div>
         </form>
     </div>
 </section>
+
+{{>footer}}

@@ -1,6 +1,8 @@
-import { accountsModel } from '../models/accountsModel.js';
+import { accountsModel } from "../models/accountsModel.js";
 
+// Handlers for CRUD operations related to user accounts
 export const accountsHandlers = {
+  // Create a new user
   async createUser(req, res) {
     try {
       const user = await accountsModel.createUser(req.body);
@@ -10,19 +12,21 @@ export const accountsHandlers = {
     }
   },
 
+  // Retrieve a user by their email
   async getUserByEmail(req, res) {
     try {
       const user = await accountsModel.getUserByEmail(req.params.email);
       if (user) {
         res.json(user);
       } else {
-        res.status(404).json({ error: 'User not found' });
+        res.status(404).json({ error: "User not found" });
       }
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
   },
 
+  // Update user information
   async updateUser(req, res) {
     try {
       const email = req.params.email;
@@ -33,6 +37,7 @@ export const accountsHandlers = {
     }
   },
 
+  // Update user analytics data
   async updateUserAnalytics(req, res) {
     try {
       const email = req.params.email;
